@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+  <SuggestForm>
+    <FormDialog Header="Suggest">
+      <Stylesheet>
+        
+        .sitecoreSuggestButtonsContainer {
+        position: absolute;
+        right: 15px;
+        top: 8px;
+        }
+        
+        .sitecoreSuggestLabel {
+        padding: 20px 0px 5px 0px;
+        }
+
+        .sitecoreSuggestHeader {
+        font-weight: bold;
+        font-size: 18px;
+        }
+      
+      </Stylesheet>
+      <CodeBeside Type="SitecoreSuggest.Dialogs.SuggestForm, SitecoreSuggest"/>
+
+      <GridPanel class="scConfirmationContainer" Width="100%" >
+        <div class="sitecoreSuggestHeader">
+          <Literal ID="ItemLiteral"/>
+        </div>
+
+        <div class="sitecoreSuggestLabel">
+          Write summary of:
+        </div>
+        
+        <Combobox ID="PromptFieldIdComboBox" Width="100%">
+          <ListItem Value="" Header=""/>
+        </Combobox>
+
+        <div class="sitecoreSuggestLabel">
+          Or write about:
+        </div>
+          
+        <Edit ID="PromptEdit"/>
+
+        <div class="sitecoreSuggestLabel">
+          And make the text this long:
+        </div>
+        <Combobox ID="WordsCombobox" Width="100%">
+          <ListItem Value="40" Header="Short"/>
+          <ListItem Value="3000" Selected="true" Header="Medium"/>
+        </Combobox>
+
+        <div class="sitecoreSuggestLabel">
+          And use the text in this field:
+        </div>
+
+        <Combobox ID="FieldIdCombobox" Width="100%">
+          <ListItem Value="" Header=""/>
+        </Combobox>
+
+        <div class="sitecoreSuggestLabel">
+          Suggestion:
+        </div>
+        <Memo ID="SuggestionMemo" Height="150px"/>
+
+      </GridPanel>
+
+      <Border class="sitecoreSuggestButtonsContainer" def:placeholder="Buttons">
+        <Button Click="GenerateClick" Header="Generate" />
+        <Button Click="UseClick" class="scButton scButtonPrimary" KeyCode="13" Header="Use" />
+        <Button Click="CancelClick" Header="Cancel" />
+      </Border>
+    </FormDialog>
+  </SuggestForm>
+</control>
