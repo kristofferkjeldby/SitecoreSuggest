@@ -28,14 +28,14 @@ namespace SitecoreSuggest
 
         public static string EndpointSetting = "SitecoreSuggest.Endpoint";
 
-        public static int MaxWords = 3000;
-
-        public static int MinWords = 20;
-
         public static int DefaultWords = 2000;
 
         public static float WordsPerToken = 0.75f;
 
-        public static int ShortValueLength = 30;
+        public static int ShortValueLength = 70;
+
+        public static string Insert = "insert";
+
+        public static string Append = "append";
     }
 }

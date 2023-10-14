@@ -58,10 +58,11 @@
             {
                 var payload = JsonConvert.DeserializeObject<SuggestFormPayload>(args.Result);
 
-                if (payload?.Action == "use")
-                {
-                    payload.UpdateField();
-                }
+                if (payload?.Action == SitecoreSuggest.Constants.Insert)
+                    payload.UpdateField(false);
+                if (payload?.Action == SitecoreSuggest.Constants.Append)
+                    payload.UpdateField(true);
+
             }
         }
     }

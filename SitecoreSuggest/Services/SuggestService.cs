@@ -31,7 +31,7 @@
             var requestBody = new
             {
                 prompt,
-                max_tokens = (int)(payload.Words * (1 / Constants.WordsPerToken)),
+                max_tokens = (int)(payload.Words / Constants.WordsPerToken),
                 n = 1,
                 stop = (string)null,
                 temperature = 0.7,

@@ -9,21 +9,12 @@
             return $"<p>{value.Replace(Environment.NewLine, "<br>")}</p>";
         }
 
-        public static int ParseLength(this string value)
+        public static int ParseWords(this string value)
         {
             if (int.TryParse(value, out var length))
-            {
-                if (length > Constants.MaxWords)
-                    return Constants.MaxWords;
-                else if (length < Constants.MinWords)
-                    return Constants.MinWords;
-                else
-                    return length;
-            }
-            else
-            {
-                return Constants.DefaultWords;
-            }
+                return length;
+
+            return Constants.DefaultWords;
         }
     }
 }

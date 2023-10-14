@@ -59,7 +59,7 @@
             return fields.OrderBy(f => f.SectionSortorder).ThenBy(f => f.SectionDisplayName).ThenBy(f => f.Sortorder).ToList();
         }
 
-        public static void UpdateField(this SuggestFormPayload payload)
+        public static void UpdateField(this SuggestFormPayload payload, bool append)
         {
             if (payload == null)
                 return;
@@ -87,6 +87,13 @@
 
             using (new EditContext(item))
             {
+                if (append)
+                {
+                    var value = item.Fields[field.ID].GetValue(true).Trim();
+                    if (!string.IsNullOrEmpty(value))
+                        suggestion = string.Concat(value, System.Environment.NewLine, suggestion);
+                }
+                    
                 item.Fields[field.ID].SetValue(suggestion, false);
             }
         }

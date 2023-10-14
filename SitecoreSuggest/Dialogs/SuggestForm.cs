@@ -13,7 +13,8 @@
 
     public class SuggestForm : DialogForm
     {
-        protected Literal ItemLiteral;
+        protected Image IconImage;
+        protected Literal NameLiteral;
         protected Combobox PromptFieldIdComboBox;
         protected Edit PromptEdit;
         protected Combobox WordsCombobox;
@@ -32,16 +33,25 @@
 
             payload.PromptFieldId = PromptFieldIdComboBox.SelectedItem.Value;
             payload.Prompt = PromptEdit.Value;
-            payload.Words = WordsCombobox.SelectedItem.Value.ParseLength();
+            payload.Words = WordsCombobox.SelectedItem.Value.ParseWords();
 
             SuggestionMemo.Value = SuggestService.GenerateSuggestion(payload);
         }
 
-        protected void UseClick()
+        protected void InsertClick()
+        {
+            Close(SitecoreSuggest.Constants.Insert);
+        }
+
+        protected void AppendClick()
+        {
+            Close(SitecoreSuggest.Constants.Append);
+        }
+
+        protected void Close(string action)
         {
             var payload = GetPayload();
-
-            payload.Action = "use";
+            payload.Action = action;
             payload.Suggestion = SuggestionMemo.Value;
             payload.FieldId = FieldIdCombobox.SelectedItem.Value;
 
@@ -60,7 +70,8 @@
             var payload = GetPayload();
 
             var item = payload.GetItem();
-            this.ItemLiteral.Text = item.Name;
+            this.IconImage.Src = Sitecore.Resources.Images.GetThemedImageSource(item.Appearance.Icon.Replace("16x16", "32x32"));
+            this.NameLiteral.Text = item.Name;
             BindFields(payload);
         }
 
