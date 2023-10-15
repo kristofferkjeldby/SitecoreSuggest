@@ -29,13 +29,12 @@
 
         protected void GenerateClick()
         {
-            var payload = GetPayload();
+            Generate(false);
+        }
 
-            payload.PromptFieldId = PromptFieldIdComboBox.SelectedItem.Value;
-            payload.Prompt = PromptEdit.Value;
-            payload.Words = WordsCombobox.SelectedItem.Value.ParseWords();
-
-            SuggestionMemo.Value = SuggestService.GenerateSuggestion(payload);
+        protected void GenerateMoreClick()
+        {
+            Generate(true);
         }
 
         protected void InsertClick()
@@ -46,6 +45,22 @@
         protected void AppendClick()
         {
             Close(SitecoreSuggest.Constants.Append);
+        }
+
+        protected void Generate(bool append)
+        {
+            var payload = GetPayload();
+
+            payload.PromptFieldId = PromptFieldIdComboBox.SelectedItem.Value;
+            payload.Prompt = PromptEdit.Value;
+            payload.Words = WordsCombobox.SelectedItem.Value.ParseWords();
+
+            var suggestion = SuggestService.GenerateSuggestion(payload);
+
+            if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
+                SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
+            else
+                SuggestionMemo.Value = suggestion;
         }
 
         protected void Close(string action)
@@ -70,8 +85,9 @@
             var payload = GetPayload();
 
             var item = payload.GetItem();
-            this.IconImage.Src = Sitecore.Resources.Images.GetThemedImageSource(item.Appearance.Icon.Replace("16x16", "32x32"));
+            this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
+
             BindFields(payload);
         }
 

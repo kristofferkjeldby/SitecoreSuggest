@@ -28,6 +28,8 @@ namespace SitecoreSuggest
 
         public static string EndpointSetting = "SitecoreSuggest.Endpoint";
 
+        public static string ModelSetting = "SitecoreSuggest.Model";
+
         public static int DefaultWords = 2000;
 
         public static float WordsPerToken = 0.75f;

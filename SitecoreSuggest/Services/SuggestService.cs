@@ -18,6 +18,9 @@
             var endpoint = Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
             Assert.IsNotNull(endpoint, nameof(apiKey));
 
+            var model = Sitecore.Configuration.Settings.GetSetting(Constants.ModelSetting);
+            Assert.IsNotNull(endpoint, nameof(apiKey));
+
             var prompt = payload.GetPrompt();
 
             if (string.IsNullOrEmpty(prompt))
@@ -35,6 +38,7 @@
                 n = 1,
                 stop = (string)null,
                 temperature = 0.7,
+                model
             };
 
             var stringBody = JsonConvert.SerializeObject(requestBody);

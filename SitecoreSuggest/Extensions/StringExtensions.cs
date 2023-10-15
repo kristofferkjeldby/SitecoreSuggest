@@ -16,5 +16,10 @@
 
             return Constants.DefaultWords;
         }
+
+        public static string Append(this string value, string text)
+        {
+            return string.Concat(value, Environment.NewLine, Environment.NewLine, text);
+        }
     }
 }

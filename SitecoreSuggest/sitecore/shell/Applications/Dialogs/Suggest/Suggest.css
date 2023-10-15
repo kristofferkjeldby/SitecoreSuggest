@@ -1,0 +1,44 @@
+﻿.scDialogContentContainer {
+    padding-bottom: 0px;
+}
+
+.sitecoreSuggest_ButtonsContainer {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+}
+
+.sitecoreSuggest_Label {
+    padding: 0px 0px 5px 0px;
+}
+
+.sitecoreSuggest_Input {
+    margin-bottom: 10px;
+}
+
+.sitecoreSuggest_Section {
+    border: 1px #dddddd solid;
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+
+.sitecoreSuggest_InputSection {
+    margin-bottom: 15px;
+}
+
+.sitecoreSuggest_SuggestionSection {
+    margin-bottom: 0px;
+}
+
+.sitecoreSuggest_HeaderColumn {
+    padding: 10px 10px 15px 0px;
+}
+
+.sitecoreSuggest_HeaderNameColumn {
+    font-size: 16px;
+    padding-top: 15px;
+}
+
+.sitecoreSuggest_HeaderSection {
+    display: flex;
+}

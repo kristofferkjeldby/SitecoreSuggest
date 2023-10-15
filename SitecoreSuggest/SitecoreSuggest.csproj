@@ -90,6 +90,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sitecore\shell\Applications\Dialogs\Suggest\Suggest.js" />
+    <Content Include="sitecore\shell\Applications\Dialogs\Suggest\Suggest.css" />
     <Content Include="sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml" />
   </ItemGroup>
   <ItemGroup>

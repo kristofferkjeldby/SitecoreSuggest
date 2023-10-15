@@ -20,5 +20,10 @@
 
             return true;
         }
+
+        public static string GetLargeIconUrl(this Item item)
+        {
+            return Sitecore.Resources.Images.GetThemedImageSource(item.Appearance.Icon.Replace("16x16", "32x32"));
+        }
     }
 }
