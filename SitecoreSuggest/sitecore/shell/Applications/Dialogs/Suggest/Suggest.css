@@ -1,4 +1,8 @@
-﻿.scDialogContentContainer {
+﻿.footerOkCancel {
+    display: none;
+}
+
+.scDialogContentContainer {
     padding-bottom: 0px;
 }
 

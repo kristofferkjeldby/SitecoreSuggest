@@ -68,8 +68,8 @@
 
       <Border class="sitecoreSuggest_ButtonsContainer" def:placeholder="Buttons">
 
-        <Button Click="AppendClick" class="scButton" Header="Append" />
-        <Button Click="InsertClick" class="scButton scButtonPrimary" KeyCode="13" Header="Insert" />
+        <Button ID="AppendButton" Click="AppendClick" class="scButton" Header="Append" />
+        <Button ID="InsertButton" Click="InsertClick" class="scButton scButtonPrimary" KeyCode="13" Header="Insert" />
         <Button Click="CancelClick" Header="Cancel" />
       </Border>
     </FormDialog>
