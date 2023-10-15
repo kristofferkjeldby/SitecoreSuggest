@@ -8,12 +8,15 @@
 
       <GridPanel class="scConfirmationContainer" Width="100%" >
 
-        <div class="sitecoreSuggest_HeaderSection">
-          <div class="sitecoreSuggest_HeaderColumn">
+        <div class="sitecoreSuggest_Header">
+          <div class="sitecoreSuggest_HeaderIconColumn">
             <Image ID="IconImage"/>
           </div>
           <div class="sitecoreSuggest_HeaderColumn sitecoreSuggest_HeaderNameColumn">
             <Literal ID="NameLiteral"/>
+          </div>
+          <div class="sitecoreSuggest_HeaderColumn sitecoreSuggest_HeaderModelColumn">
+            Model: <Literal ID="ModelLiteral"/>
           </div>
         </div>
 
@@ -23,7 +26,7 @@
             Write summary of:
           </div>
         
-          <Combobox ID="PromptFieldIdComboBox" class="sitecoreSuggest_Input" Width="100%">
+          <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Input" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
 
@@ -42,7 +45,7 @@
             <ListItem Value="3000" Selected="true" Header="Medium"/>
           </Combobox>
 
-          <Button ID="GenerateButton" Click="GenerateClick" class="scButton" Header="Generate" />
+          <Button ID="GenerateButton" Click="GenerateClick" class="scButton scButtonPrimary" Header="Generate" />
           <Button ID="GenerateMoreButton" Click="GenerateMoreClick" class="scButton" Header="Generate more" />
 
         </div>
@@ -58,7 +61,7 @@
             Use the suggestion in this field:
           </div>
 
-          <Combobox ID="FieldIdCombobox" Width="100%">
+          <Combobox ID="FieldIdCombobox" class="sitecoreSuggest_Input" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
 
@@ -68,9 +71,10 @@
 
       <Border class="sitecoreSuggest_ButtonsContainer" def:placeholder="Buttons">
 
+        <Button ID="CopyButton" class="scButton" Header="Copy to clipboard" />
         <Button ID="AppendButton" Click="AppendClick" class="scButton" Header="Append" />
-        <Button ID="InsertButton" Click="InsertClick" class="scButton scButtonPrimary" KeyCode="13" Header="Insert" />
-        <Button Click="CancelClick" Header="Cancel" />
+        <Button ID="ReplaceButton" Click="ReplaceClick" class="scButton" KeyCode="13" Header="Replace" />
+        <Button Click="CloseClick" Header="Close" />
       </Border>
     </FormDialog>
   </SuggestForm>

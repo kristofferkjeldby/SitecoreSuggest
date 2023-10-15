@@ -10,8 +10,12 @@
     using System.Collections.Specialized;
     using System.Linq;
 
+    /// <summary>
+    /// Implements the suggest comment
+    /// </summary>
     public class SuggestCommand : Command
     {
+        /// <inheritdoc />
         public override CommandState QueryState(CommandContext context)
         {
             var item = context.Items.FirstOrDefault();
@@ -22,6 +26,7 @@
             return CommandState.Enabled;
         }
 
+        /// <inheritdoc />
         public override void Execute(CommandContext context)
         {
             var item = context.Items.FirstOrDefault();
@@ -42,10 +47,13 @@
                 { "payload", JsonConvert.SerializeObject(payload) },
             };
 
-            Context.ClientPage.Start(this, nameof(Suggest), parameters);
+            Context.ClientPage.Start(this, nameof(SuggestForm), parameters);
         }
 
-        public void Suggest(ClientPipelineArgs args)
+        /// <summary>
+        /// Shows the suggest form
+        /// </summary>
+        public void SuggestForm(ClientPipelineArgs args)
         {
             if (!args.IsPostBack)
             {
@@ -58,7 +66,7 @@
             {
                 var payload = JsonConvert.DeserializeObject<SuggestFormPayload>(args.Result);
 
-                if (payload?.Action == SitecoreSuggest.Constants.Insert)
+                if (payload?.Action == SitecoreSuggest.Constants.Replace)
                     payload.UpdateField(false);
                 if (payload?.Action == SitecoreSuggest.Constants.Append)
                     payload.UpdateField(true);

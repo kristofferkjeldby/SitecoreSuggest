@@ -9,8 +9,14 @@
     using System.Linq;
     using Version = Sitecore.Data.Version;
 
+    /// <summary>
+    /// Extensions for payloads
+    /// </summary>
     public static class SuggestFormPayloadExtensions
     {
+        /// <summary>
+        /// Gets the item.
+        /// </summary>
         public static Item GetItem(this SuggestFormPayload payload)
         {
             var database = Database.GetDatabase(payload.Database);
@@ -21,25 +27,17 @@
             return database.GetItem(itemId, langauge, version);
         }
 
+        /// <summary>
+        /// Gets the language.
+        /// </summary>
         public static Language GetLanguage(this SuggestFormPayload payload)
         {
             return Language.Parse(payload.Language);
         }
 
-        public static string GetPromptFieldValue(this SuggestFormPayload payload)
-        {
-            if (string.IsNullOrEmpty(payload.PromptFieldId))
-                return null;
-
-            var item = payload.GetItem();
-
-            var promptFieldId = ID.Parse(payload.PromptFieldId);
-
-            var promptField = item?.Fields[promptFieldId];
-
-            return promptField?.GetValue(true)?.Trim();
-        }
-
+        /// <summary>
+        /// Gets the fields.
+        /// </summary>
         public static List<Field> GetFields(this SuggestFormPayload payload)
         {
             var item = payload.GetItem();
@@ -59,6 +57,9 @@
             return fields.OrderBy(f => f.SectionSortorder).ThenBy(f => f.SectionDisplayName).ThenBy(f => f.Sortorder).ToList();
         }
 
+        /// <summary>
+        /// Update the fields.
+        /// </summary>
         public static void UpdateField(this SuggestFormPayload payload, bool append)
         {
             if (payload == null)
@@ -96,19 +97,6 @@
                     
                 item.Fields[field.ID].SetValue(suggestion, false);
             }
-        }
-
-        public static string GetPrompt(this SuggestFormPayload payload)
-        {
-            var prompt = payload.Prompt;
-
-            if (string.IsNullOrEmpty(prompt))
-                prompt = payload.GetPromptFieldValue();
-
-            if (string.IsNullOrEmpty(prompt))
-                return string.Empty;
-
-            return string.Format(Constants.SummaryStrings[payload.Language], prompt);
         }
     }
 }

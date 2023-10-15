@@ -2,6 +2,7 @@
 {
     using Newtonsoft.Json;
     using Sitecore;
+    using Sitecore.Data;
     using Sitecore.Diagnostics;
     using Sitecore.Web;
     using Sitecore.Web.UI.HtmlControls;
@@ -11,69 +12,32 @@
     using SitecoreSuggest.Service;
     using System;
 
+    /// <summary>
+    /// The suggest form shown in Sitecore
+    /// </summary>
     public class SuggestForm : DialogForm
     {
         protected Image IconImage;
         protected Literal NameLiteral;
-        protected Combobox PromptFieldIdComboBox;
+        protected Literal ModelLiteral;
+        protected Combobox SummaryFieldIdCombobox;
         protected Edit PromptEdit;
         protected Combobox WordsCombobox;
         protected Combobox FieldIdCombobox;
         protected Memo SuggestionMemo;
         protected SuggestService SuggestService = new SuggestService();
 
-        protected void CancelClick()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SuggestForm"/> class.
+        /// </summary>
+        public SuggestForm() : base()
         {
-            Context.ClientPage.ClientResponse.CloseWindow();
+
         }
 
-        protected void GenerateClick()
-        {
-            Generate(false);
-        }
-
-        protected void GenerateMoreClick()
-        {
-            Generate(true);
-        }
-
-        protected void InsertClick()
-        {
-            Close(SitecoreSuggest.Constants.Insert);
-        }
-
-        protected void AppendClick()
-        {
-            Close(SitecoreSuggest.Constants.Append);
-        }
-
-        protected void Generate(bool append)
-        {
-            var payload = GetPayload();
-
-            payload.PromptFieldId = PromptFieldIdComboBox.SelectedItem.Value;
-            payload.Prompt = PromptEdit.Value;
-            payload.Words = WordsCombobox.SelectedItem.Value.ParseWords();
-
-            var suggestion = SuggestService.GenerateSuggestion(payload);
-
-            if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
-                SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
-            else
-                SuggestionMemo.Value = suggestion;
-        }
-
-        protected void Close(string action)
-        {
-            var payload = GetPayload();
-            payload.Action = action;
-            payload.Suggestion = SuggestionMemo.Value;
-            payload.FieldId = FieldIdCombobox.SelectedItem.Value;
-
-            Context.ClientPage.ClientResponse.SetDialogValue(JsonConvert.SerializeObject(payload));
-            Context.ClientPage.ClientResponse.CloseWindow();
-        }
-
+        /// <summary>
+        /// Triggered on load.
+        /// </summary>
         protected override void OnLoad(EventArgs e)
         {
             Assert.ArgumentNotNull(e, nameof(e));
@@ -87,10 +51,86 @@
             var item = payload.GetItem();
             this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
+            this.ModelLiteral.Text = SuggestService.Model;
 
             BindFields(payload);
         }
 
+        /// <summary>
+        /// Generates suggestions.
+        /// </summary>
+        protected void Generate(bool append)
+        {
+            var words = WordsCombobox.SelectedItem.Value.ParseInt(SitecoreSuggest.Constants.DefaultWords);
+
+            var prompt = PromptEdit.Value;
+
+            // If no prompt is entered, generate one from the summary field
+            if (string.IsNullOrEmpty(prompt))
+            {
+                var summaryFieldId = SummaryFieldIdCombobox.SelectedItem.Value;
+                var payload = GetPayload();
+                prompt = GenerateSummaryFieldPrompt(payload, summaryFieldId);
+            }
+
+            if (string.IsNullOrEmpty(prompt))
+                return;
+
+            var suggestion = SuggestService.GenerateSuggestion(prompt, words);
+
+            if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
+                SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
+            else
+                SuggestionMemo.Value = suggestion;
+        }
+
+        /// <summary>
+        /// Resolves the summary field value into a prompt.
+        /// </summary>
+        private static string GenerateSummaryFieldPrompt(SuggestFormPayload payload, string summaryFieldId)
+        {
+            if (string.IsNullOrEmpty(summaryFieldId))
+                return null;
+
+            var item = payload.GetItem();
+
+            if (ID.TryParse(summaryFieldId, out var id))
+            {
+                var summaryField = item?.Fields[id];
+                var summaryFieldValue = summaryField?.GetValue(true)?.Trim();
+                
+                if (string.IsNullOrEmpty(summaryFieldValue))
+                    return null;
+
+                if (SitecoreSuggest.Constants.SummaryPrompts.TryGetValue(payload.Language, out var summaryQuery))
+                    return string.Format(summaryQuery, summaryFieldValue);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Closes the form with the specified action.
+        /// </summary>
+        protected void Close(string action = null)
+        {
+            if (action == null) {
+                Context.ClientPage.ClientResponse.CloseWindow();
+                return;
+            }
+
+            var payload = GetPayload();
+            payload.Action = action;
+            payload.Suggestion = SuggestionMemo.Value;
+            payload.FieldId = FieldIdCombobox.SelectedItem.Value;
+
+            Context.ClientPage.ClientResponse.SetDialogValue(JsonConvert.SerializeObject(payload));
+            Context.ClientPage.ClientResponse.CloseWindow();
+        }
+
+        /// <summary>
+        /// Gets the payload from the url
+        /// </summary>
         private static SuggestFormPayload GetPayload()
         {
             var payloadJson = WebUtil.GetQueryString("payload");
@@ -98,24 +138,64 @@
             return payload;
         }
 
+        /// <summary>
+        /// Binds the comboboxes.
+        /// </summary>
         private void BindFields(SuggestFormPayload payload)
         {
-            FieldIdCombobox.Controls.Clear();
-
             foreach (var field in payload.GetFields())
             {
                 FieldIdCombobox.Controls.Add(new ListItem() { Header = field.Name, Value = field.ID.ToString() });
                 if (field.IsSummaryField())
                 {
                     var shortValue = field.ShortValue();
-                    PromptFieldIdComboBox.Controls.Add(new ListItem() { Header = shortValue, Value = field.ID.ToString() });
+                    SummaryFieldIdCombobox.Controls.Add(new ListItem() { Header = shortValue, Value = field.ID.ToString() });
                 }
             }
         }
 
-        public SuggestForm() : base()
-        {
+        #region Click events
 
+        /// <summary>
+        /// Triggered when generate is clicked.
+        /// </summary>
+        protected void GenerateClick()
+        {
+            Generate(false);
         }
+
+        /// <summary>
+        /// Triggered when generate more is clicked.
+        /// </summary>
+        protected void GenerateMoreClick()
+        {
+            Generate(true);
+        }
+
+        /// <summary>
+        /// Triggered when replace is clicked.
+        /// </summary>
+        protected void ReplaceClick()
+        {
+            Close(SitecoreSuggest.Constants.Replace);
+        }
+
+        /// <summary>
+        /// Triggered when append is clicked.
+        /// </summary>
+        protected void AppendClick()
+        {
+            Close(SitecoreSuggest.Constants.Append);
+        }
+
+        /// <summary>
+        /// Triggered when closed is clicked.
+        /// </summary>
+        protected void CloseClick()
+        {
+            Close();
+        }
+
+        #endregion
     }
 }

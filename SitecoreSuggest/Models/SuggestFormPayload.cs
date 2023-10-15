@@ -2,6 +2,9 @@
 {
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Model for a suggestion form payload. This is the object that the transfered between the javascript and Sitecore
+    /// </summary>
     public class SuggestFormPayload
     {
         [JsonProperty("itemId")]
@@ -18,15 +21,6 @@
 
         [JsonProperty("fieldId")]
         public string FieldId { get; set; }
-
-        [JsonProperty("promptFieldId")]
-        public string PromptFieldId { get; set; }
-
-        [JsonProperty("prompt")]
-        public string Prompt { get; set; }
-
-        [JsonProperty("words")]
-        public int Words { get; set; }
 
         [JsonProperty("suggestion")]
         public string Suggestion { get; set; }

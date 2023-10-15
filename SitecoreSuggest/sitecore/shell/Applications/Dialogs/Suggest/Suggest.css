@@ -1,10 +1,36 @@
-﻿.footerOkCancel {
+﻿/* Override Sitecore styles */
+
+.footerOkCancel {
     display: none;
 }
 
 .scDialogContentContainer {
-    padding-bottom: 0px;
+    padding-bottom: 0px !important;
 }
+
+/* Header */
+
+.sitecoreSuggest_Header {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.sitecoreSuggest_HeaderIconColumn {
+
+}
+
+.sitecoreSuggest_HeaderNameColumn {
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.sitecoreSuggest_HeaderModelColumn {
+    color: #e3e3e3;
+    margin-left: auto;
+}
+
+/* Buttons */
 
 .sitecoreSuggest_ButtonsContainer {
     position: absolute;
@@ -12,13 +38,22 @@
     top: 8px;
 }
 
+/* Labels and inputs */
+
 .sitecoreSuggest_Label {
     padding: 0px 0px 5px 0px;
 }
 
 .sitecoreSuggest_Input {
     margin-bottom: 10px;
+    padding-left: 8px;
 }
+
+.sitecoreSuggest_Disabled {
+    background-color: #e3e3e3;
+}
+
+/* Sections */
 
 .sitecoreSuggest_Section {
     border: 1px #dddddd solid;
@@ -32,17 +67,4 @@
 
 .sitecoreSuggest_SuggestionSection {
     margin-bottom: 0px;
-}
-
-.sitecoreSuggest_HeaderColumn {
-    padding: 10px 10px 15px 0px;
-}
-
-.sitecoreSuggest_HeaderNameColumn {
-    font-size: 16px;
-    padding-top: 15px;
-}
-
-.sitecoreSuggest_HeaderSection {
-    display: flex;
 }
