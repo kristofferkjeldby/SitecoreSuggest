@@ -38,7 +38,7 @@
             Endpoint = endpoint ?? Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
             Assert.IsNotNull(Endpoint, nameof(endpoint));
 
-            DefaultModel = defaultModel ?? Sitecore.Configuration.Settings.GetSetting(Constants.ModelSetting);
+            DefaultModel = defaultModel ?? Sitecore.Configuration.Settings.GetSetting(Constants.DefaultModelSetting);
             Assert.IsNotNull(Endpoint, nameof(endpoint));
 
             if (!IsModelSupported(DefaultModel))

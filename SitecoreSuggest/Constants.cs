@@ -50,9 +50,9 @@
         public static string EndpointSetting = "SitecoreSuggest.Endpoint";
 
         /// <summary>
-        /// The model Sitecore setting
+        /// The default model Sitecore setting
         /// </summary>
-        public static string ModelSetting = "SitecoreSuggest.Model";
+        public static string DefaultModelSetting = "SitecoreSuggest.DefaultModel";
 
         /// <summary>
         /// The temperature Sitecore setting
