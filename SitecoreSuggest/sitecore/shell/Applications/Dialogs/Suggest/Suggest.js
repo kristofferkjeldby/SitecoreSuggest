@@ -51,8 +51,14 @@ function sitecoreSuggest_onLoad(event) {
         }
     }
 
-    function showLoader() {
-        suggestionMemo.value = "Please wait ...";
+    function showGenerateLoader() {
+        if (suggestionMemo.value.length == 0)
+            suggestionMemo.value = "Please wait ..."
+        suggestionMemo.classList.add("sitecoreSuggest_Disabled");
+    }
+
+    function showGenerateMoreLoader() {
+        suggestionMemo.classList.add("sitecoreSuggest_Disabled");
     }
 
     // Setup changes to UI
@@ -60,9 +66,11 @@ function sitecoreSuggest_onLoad(event) {
     promptEdit.addEventListener("input", initGenerate);
     fieldIdComboBox.addEventListener("input", initAppendReplace);
     generateButton.addEventListener("click", () => initSuggestion(true));
+    generateMoreButton.addEventListener("click", () => initSuggestion(true));
 
     // Setup loaders
-    generateButton.addEventListener("mousedown", showLoader);
+    generateButton.addEventListener("mousedown", showGenerateLoader);
+    generateMoreButton.addEventListener("mousedown", showGenerateMoreLoader);
 
     copyButton.addEventListener("click", async () => {
         try {
