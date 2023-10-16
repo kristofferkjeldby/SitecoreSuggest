@@ -33,6 +33,15 @@
         };
 
         /// <summary>
+        /// The prompts we use to control the number of words
+        /// </summary>
+        public static Dictionary<string, string> WordPrompts = new Dictionary<string, string>
+        {
+            { "en", "Use around \"{0}\" words" },
+            { "da", "Brug omkring \"{0}\" ord"}
+        };
+
+        /// <summary>
         /// The fields we need to support HTML for
         /// </summary>
         public static string[] HtmlTypeKeys = new string[] {
@@ -55,14 +64,9 @@
         public static string DefaultModelSetting = "SitecoreSuggest.DefaultModel";
 
         /// <summary>
-        /// The temperature Sitecore setting
+        /// The max tokens Sitecore setting
         /// </summary>
-        public static string TemperatureSetting = "SitecoreSuggest.Temperature";
-
-        /// <summary>
-        /// The default number of words in a suggestion
-        /// </summary>
-        public static int DefaultWords = 2000;
+        public static string MaxTokensSetting = "SitecoreSuggest.MaxTokens";
 
         /// <summary>
         /// The default temperature
@@ -70,9 +74,9 @@
         public static float DefaultTemperature = 0.5f;
 
         /// <summary>
-        /// The words per token (this is for ChatGPT around 0.75 words per token in English)
+        /// The default number of words in a suggestion
         /// </summary>
-        public static float WordsPerToken = 0.75f;
+        public static int DefaultWords = 2000;
 
         /// <summary>
         /// When generating summaries we will display this number of chars in the dropdown

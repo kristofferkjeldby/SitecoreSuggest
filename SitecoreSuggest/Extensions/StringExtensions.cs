@@ -13,7 +13,13 @@
         /// </summary>
         public static string ToHtml(this string value)
         {
-            return $"<p>{value.Replace(Environment.NewLine, "<br>")}</p>";
+            var replacement = $"</p>{Environment.NewLine}</p>";
+
+            return string.Concat(
+                "<p>",
+                value.Replace("\n\n", replacement).Replace("\r\n\r\n", replacement),
+                "</p>"
+            );
         }
 
         /// <summary>

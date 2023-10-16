@@ -31,9 +31,14 @@
         public string ApiKey { get; set; }
 
         /// <summary>
+        /// Gets or sets the max tokens.
+        /// </summary>
+        public int MaxTokens { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SuggestService"/> class.
         /// </summary>
-        public SuggestService(string endpoint = null, string defaultModel = null, string apiKey = null)
+        public SuggestService(string endpoint = null, string defaultModel = null, string apiKey = null, int? maxTokens = null)
         {
             Endpoint = endpoint ?? Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
             Assert.IsNotNull(Endpoint, nameof(endpoint));
@@ -47,6 +52,8 @@
             ApiKey = apiKey ?? Sitecore.Configuration.Settings.GetSetting(Constants.ApiKeySetting);
             Assert.IsNotNull(ApiKey, nameof(apiKey));
 
+            MaxTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.MaxTokensSetting, 4096);
+
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
         }
@@ -54,7 +61,7 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, int words, float temperature, string model = null)
+        public string GenerateSuggestion(string prompt, float temperature, string model = null)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
@@ -63,10 +70,10 @@
                 model = DefaultModel;
 
             if (IsChatModel(model))
-                return GenerateChat(prompt, words, temperature);
+                return GenerateChat(prompt, temperature);
 
             if (IsCompletionModel(model))
-                return GenerateCompletions(prompt, words, temperature);
+                return GenerateCompletions(prompt, temperature);
 
             throw new ArgumentException($"Unsupported model: {DefaultModel}");
         }
@@ -74,12 +81,12 @@
         /// <summary>
         /// Generates the completions response.
         /// </summary>
-        private string GenerateCompletions(string prompt, int words, float temperature)
+        private string GenerateCompletions(string prompt, float temperature)
         {
             var requestBody = new
             {
                 prompt,
-                max_tokens = (int)(words / Constants.WordsPerToken),
+                max_tokens = MaxTokens - prompt.Length,
                 n = 1,
                 stop = (string)null,
                 temperature,
@@ -95,7 +102,7 @@
         /// <summary>
         /// Generates the chat response.
         /// </summary>
-        private string GenerateChat(string prompt, int words, float temperature)
+        private string GenerateChat(string prompt, float temperature)
         {
             var requestBody = new
             {
@@ -107,7 +114,7 @@
                         content = prompt
                     }
                 },
-                max_tokens = (int)(words / Constants.WordsPerToken),
+                max_tokens = MaxTokens - prompt.Length,
                 n = 1,
                 stop = (string)null,
                 temperature,

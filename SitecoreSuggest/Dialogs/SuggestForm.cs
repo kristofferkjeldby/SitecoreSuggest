@@ -69,21 +69,30 @@
         {
             var words = WordsCombobox.SelectedItem.Value.ParseInt(SitecoreSuggest.Constants.DefaultWords);
             var temperature = TemperatureCombobox.SelectedItem.Value.ParseFloat(SitecoreSuggest.Constants.DefaultTemperature);
-
             var prompt = PromptEdit.Value;
+            var payload = GetPayload();
 
             // If no prompt is entered, generate one from the summary field
             if (string.IsNullOrEmpty(prompt))
             {
                 var summaryFieldId = SummaryFieldIdCombobox.SelectedItem.Value;
-                var payload = GetPayload();
+
                 prompt = GenerateSummaryFieldPrompt(payload, summaryFieldId);
             }
+
+            // Trim the prompt
+            prompt = prompt.Trim();
 
             if (string.IsNullOrEmpty(prompt))
                 return;
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, words, temperature);
+            // Add word prompt
+            if (SitecoreSuggest.Constants.WordPrompts.TryGetValue(payload.Language, out var wordPrompt))
+            {
+                prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(wordPrompt, words));
+            }
+
+            var suggestion = SuggestService.GenerateSuggestion(prompt, temperature);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
