@@ -42,7 +42,8 @@
           
           <Combobox ID="WordsCombobox" class="sitecoreSuggest_Input" Width="100%">
             <ListItem Value="40" Header="Short"/>
-            <ListItem Value="3000" Selected="true" Header="Medium"/>
+            <ListItem Value="2000" Selected="true" Header="Medium"/>
+            <ListItem Value="3000" Header="Long"/>
           </Combobox>
 
           <Button ID="GenerateButton" Click="GenerateClick" class="scButton scButtonPrimary" Header="Generate" />
