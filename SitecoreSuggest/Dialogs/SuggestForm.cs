@@ -28,6 +28,7 @@
         protected Combobox SummaryFieldIdCombobox;
         protected Edit PromptEdit;
         protected Combobox WordsCombobox;
+        protected Combobox TemperatureCombobox;
         protected Combobox FieldIdCombobox;
         protected Memo SuggestionMemo;
         protected SuggestService SuggestService = new SuggestService();
@@ -56,7 +57,7 @@
             var item = payload.GetItem();
             this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
-            this.ModelLiteral.Text = SuggestService.Model;
+            this.ModelLiteral.Text = SuggestService.DefaultModel;
 
             BindFields(payload);
         }
@@ -67,6 +68,7 @@
         protected void Generate(bool append)
         {
             var words = WordsCombobox.SelectedItem.Value.ParseInt(SitecoreSuggest.Constants.DefaultWords);
+            var temperature = TemperatureCombobox.SelectedItem.Value.ParseFloat(SitecoreSuggest.Constants.DefaultTemperature);
 
             var prompt = PromptEdit.Value;
 
@@ -81,7 +83,7 @@
             if (string.IsNullOrEmpty(prompt))
                 return;
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, words);
+            var suggestion = SuggestService.GenerateSuggestion(prompt, words, temperature);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);

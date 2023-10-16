@@ -46,6 +46,16 @@
             <ListItem Value="3000" Header="Long"/>
           </Combobox>
 
+          <div class="sitecoreSuggest_Label">
+            Using this amount of creativity:
+          </div>
+          
+          <Combobox ID="TemperatureCombobox" class="sitecoreSuggest_Input" Width="100%">
+            <ListItem Value="0.2" Header="Low"/>
+            <ListItem Value="0.5" Selected="true" Header="Medium"/>
+            <ListItem Value="0.7" Header="High"/>
+          </Combobox>
+
           <Button ID="GenerateButton" Click="GenerateClick" class="scButton scButtonPrimary" Header="Generate" />
           <Button ID="GenerateMoreButton" Click="GenerateMoreClick" class="scButton" Header="Generate more" />
 

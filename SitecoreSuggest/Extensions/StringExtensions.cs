@@ -1,6 +1,7 @@
 ﻿namespace SitecoreSuggest.Extensions
 {
     using System;
+    using System.Globalization;
 
     /// <summary>
     /// Extensions for strings
@@ -16,14 +17,25 @@
         }
 
         /// <summary>
-        /// Converts to int.
+        /// Parses to int.
         /// </summary>
-        public static int ParseInt(this string value, int defaultValue)
+        public static int ParseInt(this string text, int defaultValue)
         {
-            if (int.TryParse(value, out var length))
-                return length;
+            if (int.TryParse(text, out var value))
+                return value;
 
-            return Constants.DefaultWords;
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Parses to float.
+        /// </summary>
+        public static float ParseFloat(this string text, float defaultValue)
+        {
+            if (float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out var value))
+                return value;
+
+            return defaultValue;
         }
 
         /// <summary>
