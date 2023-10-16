@@ -2,7 +2,10 @@
 {
     using Newtonsoft.Json;
     using Sitecore;
+    using Sitecore.Common;
     using Sitecore.Data;
+    using Sitecore.Data.Events;
+    using Sitecore.Data.Fields;
     using Sitecore.Diagnostics;
     using Sitecore.Web;
     using Sitecore.Web.UI.HtmlControls;
@@ -11,6 +14,8 @@
     using SitecoreSuggest.Models;
     using SitecoreSuggest.Service;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The suggest form shown in Sitecore
@@ -143,15 +148,44 @@
         /// </summary>
         private void BindFields(SuggestFormPayload payload)
         {
-            foreach (var field in payload.GetFields())
+            var fields = payload.GetFields();
+            BindSummaryFields(SummaryFieldIdCombobox, fields.Where(field => field.IsSummaryField()));
+            BindFields(FieldIdCombobox, fields);
+
+        }
+
+        /// <summary>
+        /// Binds the summary fields to a combobox
+        /// </summary>
+        private static void BindSummaryFields(Combobox combobox, IEnumerable<Field> fields)
+        {
+            foreach (var field in fields)
             {
-                FieldIdCombobox.Controls.Add(new ListItem() { Header = field.Name, Value = field.ID.ToString() });
-                if (field.IsSummaryField())
-                {
-                    var shortValue = field.ShortValue();
-                    SummaryFieldIdCombobox.Controls.Add(new ListItem() { Header = shortValue, Value = field.ID.ToString() });
-                }
+                var shortValue = field.ShortValue();
+                if (string.IsNullOrEmpty(shortValue))
+                    continue;
+                combobox.Controls.Add(new ListItem() { Header = shortValue, Value = field.ID.ToString() });
             }
+        }
+
+
+        /// <summary>
+        /// Binds the fields to a combobox
+        /// </summary>
+        private static void BindFields(Combobox combobox, IEnumerable<Field> fields)
+        {
+            var fieldGroups = fields.GroupBy(f => f.SectionDisplayName);
+
+            fieldGroups.ForEach(
+                fieldGroup =>
+                {
+                    combobox.Controls.Add(new ListItem() { Header = fieldGroup.Key, Value = string.Empty, Disabled = true });
+                    fieldGroup.ForEach(field =>
+                    {
+                        combobox.Controls.Add(new ListItem() { Header = field.Name, Value = field.ID.ToString() });
+                    });
+                }
+            );
         }
 
         #region Click events

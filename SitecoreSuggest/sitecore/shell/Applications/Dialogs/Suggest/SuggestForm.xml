@@ -26,7 +26,7 @@
             Write summary of:
           </div>
         
-          <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Input" Width="100%">
+          <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Combobox" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
 
@@ -61,7 +61,7 @@
             Use the suggestion in this field:
           </div>
 
-          <Combobox ID="FieldIdCombobox" class="sitecoreSuggest_Input" Width="100%">
+          <Combobox ID="FieldIdCombobox" class="sitecoreSuggest_Combobox" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
 

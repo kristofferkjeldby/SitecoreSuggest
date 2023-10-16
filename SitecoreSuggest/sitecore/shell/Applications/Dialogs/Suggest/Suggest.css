@@ -53,6 +53,18 @@
     background-color: #e3e3e3;
 }
 
+/* Combobox */
+
+.sitecoreSuggest_Combobox {
+    margin-bottom: 10px;
+    padding-left: 8px;
+}
+
+    .sitecoreSuggest_Combobox option:disabled {
+        font-weight: bold;
+        color: #cccccc;
+    }
+
 /* Sections */
 
 .sitecoreSuggest_Section {
