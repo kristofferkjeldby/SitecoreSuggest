@@ -72,7 +72,7 @@ _Completion models_
 
 Please be aware that some of these models are really experimental and/or old. Also different models allow different max tokens sizes (result size). The max value and what that means in turn of words differs from model to model. The default setting is `4096` tokens with is a reasonable limit for both the `text-davinci-003` and `gpt-3.5-turbo` models, but this can be adjusted using the `SitecoreSuggest.MaxTokens` setting if you run into problems.
 
-# Language support
+## Language support
 
 When sending a request (a prompt) to Open AI, SitecoreSuggest does some "prompt engineering" to steer the GPT model in the right direction. In the screenshot above you can see that I have generated a summary of "Sitecore Experience Platform" (which is the title of the selected item) using a *Medium* word count. Behind the scenes, this is formatted into the following prompt: 
 
@@ -82,7 +82,7 @@ Write summary of "Sitecore Experience Platform". Use about 100 words.
 
 The language of the prompt directs the GPT model to reply in the same language. This means that if support for other languages are needed, we need to add prompts for generation of summaries and restrict the word count. This is done in the `Languages.cs` file. Out of the box SitecoreSuggest supports two languages (`en` and `da`). In other languages the *Suggest* button will be grayed out unless prompts are added for that language in the `Languages.cs` file. 
 
-# Advanced settings
+## Advanced settings
 
 *Text length*
 
@@ -91,4 +91,29 @@ The UI supports three different text lengths:
 - Short: 20 words
 - Medium: 100 words
 - Long: 700 words
+
+If needed this can be adjusted in the file `SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 44-46. Very long texts might result in a unresponsive UI and might also give problems with the maximum token length depending on the model.
+
+*Creativity*
+
+The UI supports three levels of *creativity* - techically called temperature:
+
+- Low: 0.2
+- Medium: 0.5
+- High: 0.8
+
+Most GPT models support temperatures up to 2, indicating the amount of randomness thrown into the token generation. Temperatures higher that 1 tend to produce text borderlining gibberish. 
+
+If needed the available temperatures can be adjusted in `SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 54-56.
+
+*Summary fields*
+
+SitecoreSuggest allow the content editor to input a custom prompt of use the value of one of the existing field values off an item to generate summaries.
+
+The use case, as illustrated in the screenshot above is to create a content item, enter a title (e.g. "Sitecore Experience Platform") and then generate a summary of the title to use in the main text fields of the content item.
+
+The fields available for summary generating summaries are configured in the Constants.cs file using the SummaryFields array and is per default set to allow summaries from only single-line text fields. 
+
+Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries.
+
 
