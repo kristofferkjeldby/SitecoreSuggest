@@ -38,7 +38,7 @@ You can of cause also include the code files in you own solution.
 
 When this is done, you should be able to login to Sitecore, select an content item, open the *Review* ribbon and click *Suggest* to start generating content. 
 
-# Supported models
+## Supported models
 
 SitecoreSuggest supports a number of the models offered by Open AI, both the chat and completions models. The model to use is configured in the `App_Config\Include\SitecoreSuggest.config` and is per default set to `text-davinci-003` which is a completion model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
 
@@ -84,7 +84,7 @@ The language of the prompt directs the GPT model to reply in the same language. 
 
 ## Advanced settings
 
-*Text length*
+### Text length
 
 The UI supports three different text lengths:
 
@@ -94,7 +94,7 @@ The UI supports three different text lengths:
 
 If needed this can be adjusted in the file `SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 44-46. Very long texts might result in a unresponsive UI and might also give problems with the maximum token length depending on the model.
 
-*Creativity*
+### Creativity
 
 The UI supports three levels of *creativity* - techically called temperature:
 
@@ -106,7 +106,7 @@ Most GPT models support temperatures up to 2, indicating the amount of randomnes
 
 If needed the available temperatures can be adjusted in `SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 54-56.
 
-*Summary fields*
+### Summary fields
 
 SitecoreSuggest allow the content editor to input a custom prompt of use the value of one of the existing field values off an item to generate summaries.
 
