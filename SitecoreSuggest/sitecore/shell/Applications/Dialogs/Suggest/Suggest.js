@@ -24,6 +24,7 @@ function sitecoreSuggest_onLoad(event) {
         generateButton.disabled = disabled;
         promptEdit.disabled = summaryFieldIdCombobox.value.length > 0;
         summaryFieldIdCombobox.disabled = promptEdit.value.length > 0;
+        summaryFieldIdCombobox.disabled = summaryFieldIdCombobox.length == 1;
     }
 
     // Enable append and replace buttons if field is selected
