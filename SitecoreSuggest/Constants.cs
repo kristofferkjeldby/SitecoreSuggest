@@ -8,7 +8,7 @@
         /// <summary>
         /// The supported fields (fields that we would like to use suggestions in)
         /// </summary>
-        public static string[] SupportedTypeKeys = new string[] {
+        public static string[] SupportedFields = new string[] {
             "multi-line text",
             "single-line text",
             "rich text"

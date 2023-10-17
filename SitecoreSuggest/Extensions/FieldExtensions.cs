@@ -30,7 +30,7 @@
             if (field.Name.StartsWith("__"))
                 return false;
 
-            return Constants.SupportedTypeKeys.Contains(field.TypeKey);
+            return Constants.SupportedFields.Contains(field.TypeKey);
         }
 
         /// <summary>
