@@ -13,7 +13,7 @@
         /// </summary>
         public static string ToHtml(this string value)
         {
-            var replacement = $"</p>{Environment.NewLine}</p>";
+            var replacement = $"</p>{Environment.NewLine}<p>";
 
             return string.Concat(
                 "<p>",
