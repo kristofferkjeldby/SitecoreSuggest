@@ -22,10 +22,10 @@
         [JsonProperty("fieldId")]
         public string FieldId { get; set; }
 
-        [JsonProperty("suggestion")]
+        [JsonProperty("suggestion", NullValueHandling = NullValueHandling.Ignore)]      
         public string Suggestion { get; set; }
 
-        [JsonProperty("action")]
+        [JsonProperty("action", NullValueHandling = NullValueHandling.Ignore)]
         public string Action { get; set; }
     }
 }
