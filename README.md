@@ -88,7 +88,7 @@ The language of the prompt directs the GPT model to reply in the same language. 
 
 The UI supports three different text lengths:
 
-Short: 20 words
-Medium: 100 words
-Long: 700 words
+- Short: 20 words
+- Medium: 100 words
+- Long: 700 words
 
