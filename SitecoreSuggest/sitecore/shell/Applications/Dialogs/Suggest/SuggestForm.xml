@@ -23,18 +23,18 @@
         <div class="sitecoreSuggest_Section sitecoreSuggest_InputSection">
 
           <div class="sitecoreSuggest_Label">
-            Write summary of:
+            Write about:
+          </div>
+
+          <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
+
+          <div class="sitecoreSuggest_Label">
+            Or write a summary of:
           </div>
         
           <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Combobox" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
-
-          <div class="sitecoreSuggest_Label">
-            Or write about:
-          </div>
-          
-          <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
 
           <div class="sitecoreSuggest_Label">
             And make the text this long:

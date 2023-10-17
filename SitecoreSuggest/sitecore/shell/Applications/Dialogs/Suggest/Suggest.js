@@ -63,8 +63,8 @@ function sitecoreSuggest_onLoad(event) {
     }
 
     // Setup changes to UI
-    summaryFieldIdCombobox.addEventListener("input", initGenerate);
     promptEdit.addEventListener("input", initGenerate);
+    summaryFieldIdCombobox.addEventListener("input", initGenerate);
     fieldIdComboBox.addEventListener("input", initAppendReplace);
     generateButton.addEventListener("click", () => initSuggestion(true));
     generateMoreButton.addEventListener("click", () => initSuggestion(true));

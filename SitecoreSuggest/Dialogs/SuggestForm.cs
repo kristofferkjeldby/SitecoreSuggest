@@ -4,7 +4,6 @@
     using Sitecore;
     using Sitecore.Common;
     using Sitecore.Data;
-    using Sitecore.Data.Events;
     using Sitecore.Data.Fields;
     using Sitecore.Diagnostics;
     using Sitecore.Web;
@@ -25,8 +24,8 @@
         protected Image IconImage;
         protected Literal NameLiteral;
         protected Literal ModelLiteral;
-        protected Combobox SummaryFieldIdCombobox;
         protected Edit PromptEdit;
+        protected Combobox SummaryFieldIdCombobox;
         protected Combobox WordsCombobox;
         protected Combobox TemperatureCombobox;
         protected Combobox FieldIdCombobox;
