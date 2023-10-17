@@ -19,7 +19,7 @@
         [JsonProperty("database")]
         public string Database { get; set; }
 
-        [JsonProperty("fieldId")]
+        [JsonProperty("fieldId", NullValueHandling = NullValueHandling.Ignore)]
         public string FieldId { get; set; }
 
         [JsonProperty("suggestion", NullValueHandling = NullValueHandling.Ignore)]      
