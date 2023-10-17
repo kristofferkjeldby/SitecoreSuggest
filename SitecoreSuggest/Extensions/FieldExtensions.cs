@@ -11,7 +11,7 @@
         /// <summary>
         /// Determines whether usable for summaries.
         /// </summary>
-        public static bool IsSummaryField(this Field field)
+        public static bool IsSummary(this Field field)
         {
             if (!Constants.SummaryFields.Contains(field.TypeKey))
                 return false;

@@ -1,7 +1,5 @@
 ﻿namespace SitecoreSuggest
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Constants
     /// </summary>
@@ -21,24 +19,6 @@
         /// </summary>
         public static string[] SummaryFields = new string[] {
             "single-line text",
-        };
-
-        /// <summary>
-        /// The prompts we use to generate language specific summaries
-        /// </summary>
-        public static Dictionary<string, string> SummaryPrompts = new Dictionary<string, string>
-        {
-            { "en", "Write summary of \"{0}\"" },
-            { "da", "Skriv en opsummering om \"{0}\""}
-        };
-
-        /// <summary>
-        /// The prompts we use to control the number of words
-        /// </summary>
-        public static Dictionary<string, string> WordPrompts = new Dictionary<string, string>
-        {
-            { "en", "Use around \"{0}\" words" },
-            { "da", "Brug omkring \"{0}\" ord"}
         };
 
         /// <summary>

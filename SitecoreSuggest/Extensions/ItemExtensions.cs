@@ -24,6 +24,9 @@
             if (item.Versions.Count == 0)
                 return false;
 
+            if (!Languages.SupportedLanguages.ContainsKey(item.Language.ToString()))
+                return false;
+
             return true;
         }
 

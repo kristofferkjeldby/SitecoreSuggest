@@ -87,9 +87,9 @@
                 return;
 
             // Add word prompt
-            if (SitecoreSuggest.Constants.WordPrompts.TryGetValue(payload.Language, out var wordPrompt))
+            if (Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
             {
-                prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(wordPrompt, words));
+                prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(supportedLanguage.WordPrompt, words));
             }
 
             var suggestion = SuggestService.GenerateSuggestion(prompt, temperature);
@@ -118,8 +118,8 @@
                 if (string.IsNullOrEmpty(summaryFieldValue))
                     return null;
 
-                if (SitecoreSuggest.Constants.SummaryPrompts.TryGetValue(payload.Language, out var summaryQuery))
-                    return string.Format(summaryQuery, summaryFieldValue);
+                if (Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
+                    return string.Format(supportedLanguage.SummaryPrompt, summaryFieldValue);
             }
 
             return null;
@@ -160,7 +160,7 @@
         private void BindFields(SuggestFormPayload payload)
         {
             var fields = payload.GetFields();
-            BindSummaryFields(SummaryFieldIdCombobox, fields.Where(field => field.IsSummaryField()));
+            BindSummaryFields(SummaryFieldIdCombobox, fields.Where(field => field.IsSummary()));
             BindFields(FieldIdCombobox, fields);
 
         }
