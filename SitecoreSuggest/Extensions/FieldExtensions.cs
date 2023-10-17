@@ -38,7 +38,7 @@
         /// </summary>
         public static bool IsHtml(this Field field)
         {
-            return Constants.HtmlTypeKeys.Contains(field.TypeKey);
+            return Constants.HtmlFields.Contains(field.TypeKey);
         }
 
         /// <summary>

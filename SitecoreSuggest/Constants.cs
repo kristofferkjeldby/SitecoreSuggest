@@ -24,7 +24,7 @@
         /// <summary>
         /// The fields we need to support HTML for
         /// </summary>
-        public static string[] HtmlTypeKeys = new string[] {
+        public static string[] HtmlFields = new string[] {
             "rich text"
         };
 
