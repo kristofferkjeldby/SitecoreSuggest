@@ -30,7 +30,7 @@ Note that Open AI offers both free and paid access but impose limitations on fre
 
 ### Configuring and publish the solution
 
-In Visual Studio open the file `App_Config\Include\SitecoreSuggest.config` and uncomment the SitecoreSuggest.ApiKey setting and insert your API key. 
+In Visual Studio open the file `App_Config\Include\SitecoreSuggest.config` and uncomment the `SitecoreSuggest.ApiKey` setting and insert your API key. 
 
 Setup a publish profile to publish the solution into your local Sitecore CM web root and publish the solution. Please note that the solution is setup for Sitecore 10.3. If you wish to use the solution in other version of Sitecore, make sure to adjust the NuGet packages (`Sitecore.Kernel` and `Newtonsoft.Json`) to match the expected versions.
 
