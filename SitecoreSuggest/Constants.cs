@@ -39,9 +39,14 @@
         public static string EndpointSetting = "SitecoreSuggest.Endpoint";
 
         /// <summary>
-        /// The default model Sitecore setting
+        /// The model type Sitecore setting
         /// </summary>
-        public static string DefaultModelSetting = "SitecoreSuggest.DefaultModel";
+        public static string ModelTypeSetting = "SitecoreSuggest.ModelType";
+
+        /// <summary>
+        /// The model Sitecore setting
+        /// </summary>
+        public static string ModelSetting = "SitecoreSuggest.Model";
 
         /// <summary>
         /// The max tokens Sitecore setting
@@ -74,31 +79,13 @@
         public static string Append = "append";
 
         /// <summary>
-        /// The supported chat models
+        /// The completion model keyword
         /// </summary>
-        public static string[] SupportedChatModels = new string[] { 
-            "gpt-4",
-            "gpt-4-32k",
-            "gpt-3.5-turbo",
-            "gpt-3.5-turbo-16k",
-        };
+        public static string Completion = "completion";
 
         /// <summary>
-        /// The supported completions models
+        /// The chat model keyword
         /// </summary>
-        public static string[] SupportedCompletionModels = new string[] { 
-            "davinci-002", 
-            "babbage-002", 
-            "text-davinci-003", 
-            "text-davinci-002", 
-            "text-davinci-001", 
-            "text-curie-001", 
-            "text-babbage-001", 
-            "text-ada-001", 
-            "davinci", 
-            "curie", 
-            "babbage", 
-            "ada"
-        };
+        public static string Chat = "chat";
     }
 }

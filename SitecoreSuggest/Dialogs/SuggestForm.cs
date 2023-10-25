@@ -56,7 +56,7 @@
             var item = payload.GetItem();
             this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
-            this.ModelLiteral.Text = SuggestService.DefaultModel;
+            this.ModelLiteral.Text = SuggestService.Model;
 
             BindFields(payload);
         }
