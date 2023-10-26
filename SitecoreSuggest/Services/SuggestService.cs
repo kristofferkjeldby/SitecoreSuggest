@@ -19,12 +19,12 @@
         /// <summary>
         /// Gets or sets the endpoint.
         /// </summary>
-        public string Endpoint { get; set; }
+        public string BaseUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the model type.
+        /// Gets or sets the endpoint.
         /// </summary>
-        public string ModelType { get; set; }
+        public string Endpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the model.
@@ -44,17 +44,17 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="SuggestService"/> class.
         /// </summary>
-        public SuggestService(string endpoint = null, string modelType = null, string model = null, string apiKey = null, int? maxTokens = null)
+        public SuggestService(string baseUrl = null, string endpoint = null, string model = null, string apiKey = null, int? maxTokens = null)
         {
-            Endpoint = endpoint ?? Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
-            Assert.IsNotNull(Endpoint, nameof(endpoint));
+            BaseUrl = baseUrl ?? Sitecore.Configuration.Settings.GetSetting(Constants.BaseUrlSetting);
+            Assert.IsNotNull(BaseUrl, nameof(BaseUrl));
 
-            ModelType = modelType ?? Sitecore.Configuration.Settings.GetSetting(Constants.ModelTypeSetting);
-            if (!IsModelTypeSupported(ModelType))
-                throw new ArgumentException($"Unsupported model type: {Model}");
+            Endpoint = endpoint ?? Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
+            if (!IsEndpointSupported(Endpoint))
+                throw new ArgumentException($"Unsupported endpoint: {Endpoint}");
 
             Model = model ?? Sitecore.Configuration.Settings.GetSetting(Constants.ModelSetting);
-            Assert.IsNotNull(Model, nameof(endpoint));
+            Assert.IsNotNull(Model, nameof(baseUrl));
 
             ApiKey = apiKey ?? Sitecore.Configuration.Settings.GetSetting(Constants.ApiKeySetting);
             Assert.IsNotNull(ApiKey, nameof(apiKey));
@@ -68,24 +68,25 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, float temperature, string modelType = null, string model = null)
+        public string GenerateSuggestion(string prompt, float temperature, string endpoint = null, string model = null)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
 
-            if (string.IsNullOrWhiteSpace(modelType))
-                modelType = ModelType;
+            if (string.IsNullOrWhiteSpace(endpoint))
+                endpoint = Endpoint;
 
             if (string.IsNullOrWhiteSpace(model))
                 model = Model;
 
-            if (IsChatModel(modelType))
-                return GenerateChat(prompt, temperature, model);
-
-            if (IsCompletionModel(modelType))
+            if (endpoint.Equals(Constants.Completion))
                 return GenerateCompletions(prompt, temperature, model);
 
-            throw new ArgumentException($"Unsupported model type: {ModelType}");
+            if (endpoint.Equals(Constants.Chat))
+                return GenerateChat(prompt, temperature, model);
+
+
+            throw new ArgumentException($"Unsupported endpoint: {endpoint}");
         }
 
         /// <summary>
@@ -103,7 +104,7 @@
                 model
             };
 
-            var jsonResponse = GetResponse(requestBody, string.Concat(Endpoint, "/completions"), out var errorMessage);
+            var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))
                 return errorMessage;
             return jsonResponse?.choices[0]?.text?.ToString()?.Trim() ?? string.Empty;
@@ -131,7 +132,7 @@
                 model
             };
 
-            var jsonResponse = GetResponse(requestBody, string.Concat(Endpoint, "/chat/completions"), out var errorMessage);
+            var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/chat/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))
                 return errorMessage;
             return jsonResponse?.choices[0]?.message?.content?.ToString()?.Trim() ?? string.Empty;
@@ -157,27 +158,11 @@
         }
 
         /// <summary>
-        /// Determines whether a model type is supported.
+        /// Determines whether a endpoint is supported.
         /// </summary>
-        private bool IsModelTypeSupported(string modelType)
+        private bool IsEndpointSupported(string endpoint)
         {
-            return IsChatModel(modelType) || IsCompletionModel(modelType);
-        }
-
-        /// <summary>
-        /// Determines whether a model is a completion model.
-        /// </summary>
-        private bool IsChatModel(string modelType)
-        {
-            return modelType.Equals(Constants.Chat);
-        }
-
-        /// <summary>
-        /// Determines whether a model is a chat model.
-        /// </summary>
-        private bool IsCompletionModel(string modelType)
-        {
-            return modelType.Equals(Constants.Completion);
+            return endpoint.Equals(Constants.Completion) || endpoint.Equals(Constants.Chat);
         }
     }
 }

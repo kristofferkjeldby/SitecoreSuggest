@@ -34,14 +34,14 @@
         public static string ApiKeySetting = "SitecoreSuggest.ApiKey";
 
         /// <summary>
+        /// The base url Sitecore setting
+        /// </summary>
+        public static string BaseUrlSetting = "SitecoreSuggest.BaseUrl";
+
+        /// <summary>
         /// The endpoint Sitecore setting
         /// </summary>
         public static string EndpointSetting = "SitecoreSuggest.Endpoint";
-
-        /// <summary>
-        /// The model type Sitecore setting
-        /// </summary>
-        public static string ModelTypeSetting = "SitecoreSuggest.ModelType";
 
         /// <summary>
         /// The model Sitecore setting
