@@ -79,7 +79,7 @@
             if (string.IsNullOrWhiteSpace(model))
                 model = Model;
 
-            if (endpoint.Equals(Constants.Completion))
+            if (endpoint.Equals(Constants.Completions))
                 return GenerateCompletions(prompt, temperature, model);
 
             if (endpoint.Equals(Constants.Chat))
@@ -162,7 +162,7 @@
         /// </summary>
         private bool IsEndpointSupported(string endpoint)
         {
-            return endpoint.Equals(Constants.Completion) || endpoint.Equals(Constants.Chat);
+            return endpoint.Equals(Constants.Completions) || endpoint.Equals(Constants.Chat);
         }
     }
 }

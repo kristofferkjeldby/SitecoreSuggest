@@ -79,9 +79,9 @@
         public static string Append = "append";
 
         /// <summary>
-        /// The completion model keyword
+        /// The completions model keyword
         /// </summary>
-        public static string Completion = "completion";
+        public static string Completions = "completions";
 
         /// <summary>
         /// The chat model keyword
