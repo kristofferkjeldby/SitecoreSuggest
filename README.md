@@ -36,41 +36,28 @@ Setup a publish profile to publish the solution into your local Sitecore CM web 
 
 You can of cause also include the code files in you own solution.
 
-When this is done, you should be able to login to Sitecore, select an content item, open the *Review* ribbon and click *Suggest* to start generating content for the selected item. 
+When this is done, you should be able to login to Sitecore, select an content item, open the *Review* ribbon and click *Suggest* to start generating content for the selected item based on a prompt (and question).
 
 ## Supported models
 
-SitecoreSuggest supports a number of the models offered by Open AI, both the chat and completions models. The model to use is configured in the `App_Config\Include\SitecoreSuggest.config` and is per default set to `text-davinci-003` which is a completion model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
+SitecoreSuggest supports two different Open AI endpoints - the completion and the chat endpoint, and a number of models exposed by each of these endpoints. Be aware that the models supported are _not_ the same for the two endpoints: The models exposed by the chat endpoint have been optimized for multi-turn chats with a chat context (previous prompts) whereas the completion endpoint simply support as single prompt and a reply. Hence it is important to match the `ModelType` (whether to call the completion or chat endpoint) and `Model` settings to avoid calling e.g. a chat model via the completion endpoint. Also different models allow different max tokens sizes (combined size of the prompt, prompt and chat size if any) - this is set using the `MaxTokens` setting. As number of models for both endpoints changes often, this list is probably already outdated, but SitecoreSuggest have been tested with the following combination of ModelType, Model and MaxTokens settings:
 
-Hence it is a bit faster and provides less "chatty" results than the chat models. I suggest you start by experimenting with these two models, but other models that should work - at least to some extend - are:
+|ModelType|Model|MaxTokens|
+|---|---|---|
+|completion|text-davinci-003|4096|
+|completion|text-davinci-002|4096|
+|completion|text-davinci-001|2049|
+|completion|text-curie-001|2049|
+|completion|text-babbage-001|2049|
+|completion|text-ada-001|2049|
+|chat|gpt-4|8192|
+|chat|gpt-3.5-turbo|4096|
 
-_Chat models_
-
-- gpt-4
-- gpt-4-32k
-- gpt-3.5-turbo
-- gpt-3.5-turbo-16k
-
-_Completion models_
-
-- davinci-002 
-- babbage-002 
-- text-davinci-003 
-- text-davinci-002 
-- text-davinci-001 
-- text-curie-001 
-- text-babbage-001 
-- text-ada-001 
-- davinci 
-- curie 
-- babbage 
-- ada
-
-Please be aware that some of these models are really experimental and/or old. Also different models allow different max tokens sizes (result size). The max value and what that means in turn of words differs from model to model. The default setting is `4096` tokens with is a reasonable limit for both the `text-davinci-003` and `gpt-3.5-turbo` models, but this can be adjusted using the `SitecoreSuggest.MaxTokens` setting if you run into problems.
+Some of the completion models are really old. The default model is set to `text-davinci-003` which is a completion model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
 
 ## Language support
 
-When sending a request (a prompt) to Open AI, SitecoreSuggest does some "prompt engineering" to steer the GPT model in the right direction. In the screenshot above you can see that I have generated a summary of "Sitecore Experience Platform" (which is the title of the selected item) using a *Medium* word count. Behind the scenes, this is formatted into the following prompt: 
+When sending a prompt to Open AI, SitecoreSuggest does some "prompt engineering" to steer the model in the right direction. In the screenshot above you can see that I have generated a summary of "Sitecore Experience Platform" (which is the title of the selected item) using a *Medium* word count. Behind the scenes, this is formatted into the following prompt: 
 
 ```
 Write summary of "Sitecore Experience Platform". Use about 100 words.
