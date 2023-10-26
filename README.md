@@ -40,9 +40,9 @@ When this is done, you should be able to login to Sitecore, select an content it
 
 ## Supported models
 
-SitecoreSuggest supports two different Open AI endpoints - the completion and the chat endpoint, and a number of models exposed by each of these endpoints. 
+SitecoreSuggest supports two different Open AI endpoints - the completions and the chat endpoint, and a number of models exposed by each of these endpoints. 
 
-The ModelType (chat or completion) and the Model is configured in the file `App_Config\Include\SitecoreSuggest.config`:
+The `Endpoint` ("completion" or "chat") and the `Model`  is configured in the file `App_Config\Include\SitecoreSuggest.config`:
 
 ```
 <configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:set="http://www.sitecore.net/xmlconfig/set/" xmlns:role="http://www.sitecore.net/xmlconfig/role/">
@@ -52,15 +52,16 @@ The ModelType (chat or completion) and the Model is configured in the file `App_
     </commands>
     <settings>
       <!--<setting name="SitecoreSuggest.ApiKey" value=""/>-->
-      <setting name="SitecoreSuggest.Endpoint" value="https://api.openai.com/v1"/>
-      <!-- Please make sure to match the model type (completion or chat) to the selected model as not all models exist in both a completion and a chat version -->
-      <setting name="SitecoreSuggest.ModelType" value="completion"/>
+      <setting name="SitecoreSuggest.BaseUrl" value="https://api.openai.com/v1"/>
+      <!-- Please make sure to match the endpoint ("completion" or "chat") to the selected model as the model exposed by the endpoints are not the same -->
+      <setting name="SitecoreSuggest.Endpoint" value="completion"/>
       <setting name="SitecoreSuggest.Model" value="text-davinci-003"/>
       <setting name="SitecoreSuggest.MaxTokens" value="4096"/>
     </settings>
   </sitecore>
 </configuration>
 ```
+
 Be aware that the models supported are _not_ the same for the two endpoints: The models exposed by the chat endpoint have been optimized for multi-turn chats with a chat context (previous prompts) whereas the completion endpoint simply support as single prompt and a reply. 
 
 Hence it is important to match the `Endpoint` (whether to call the completion or chat endpoint) and `Model` settings to avoid calling e.g. a chat model via the completion endpoint. Also different models allow different max tokens sizes (combined size of the prompt, prompt and chat size if any) - this is set using the `MaxTokens` setting. As number of models for both endpoints changes often, this list is probably already outdated, but SitecoreSuggest have been tested with the following combination of `Endpoint`, `Model` and `MaxTokens` settings:
