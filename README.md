@@ -45,7 +45,7 @@ SitecoreSuggest supports two different Open AI endpoints - the _completions_ and
 The `Endpoint` ("completions" or "chat") and the `Model` settings are configured in the file [App_Config\Include\SitecoreSuggest.config](SitecoreSuggest/App_Config/Include/SitecoreSuggest.config):
 
 ```
-<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:set="http://www.sitecore.net/xmlconfig/set/" xmlns:role="http://www.sitecore.net/xmlconfig/role/">
+<configuration xmlns:role="http://www.sitecore.net/xmlconfig/role/">
   <sitecore role:require="ContentManagement or Standalone">
     <commands>
       <command name="custom:SitecoreSuggest" type="SitecoreSuggest.Commands.SuggestCommand, SitecoreSuggest"/>
