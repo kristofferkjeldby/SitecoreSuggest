@@ -111,9 +111,9 @@ The UI supports three levels of *creativity* - techically called temperature:
 - Medium: 0.5
 - High: 0.8
 
-Most GPT models support temperatures up to 2, indicating the amount of randomness thrown into the token generation. Temperatures higher that 1 tend to produce text borderlining gibberish. 
+Most GPT models support temperatures up to 2, indicating the amount of randomness thrown into the token generation. Temperatures higher that 1 tend to produce text close to gibberish. 
 
-If needed the available temperatures can be adjusted in `SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 54-56.
+If needed the available temperatures can be adjusted in [sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml](SitecoreSuggest/sitecore/shell/Applications/Dialogs/Suggest/SuggestForm.xml) line 54-56.
 
 ### Summary fields
 
