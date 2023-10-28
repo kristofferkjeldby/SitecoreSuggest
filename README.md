@@ -131,6 +131,7 @@ When SitecoreSuggest has generated a suggestion, is it possible to either append
 
 The fields where appending and inserting are supported are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) filed in the `SupportedFields` array. The default configuration is `single-line text`, `multi-line text` and `rich text` fields. The field types that expect HTML (rich text) also need to be added to the `HtmlFields` array to allow SitecoreSuggest to format the suggestions using HTML. 
 
+## Read more
 
-
+You can read more about SitecoreSuggest on my blog: https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai-and-chatgpt/
 
