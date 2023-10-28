@@ -101,7 +101,7 @@ The UI supports three different text lengths:
 - Medium: 100 words
 - Long: 700 words
 
-If needed this can be adjusted in the file [Languages.cs](SitecoreSuggest/Languages.cs)`SitecoreSuggest\SitecoreSuggest\sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml` line 44-46. Very long texts might result in a unresponsive UI and might also give problems with the maximum token length depending on the model.
+If needed this can be adjusted in the file [sitecore\shell\Applications\Dialogs\Suggest\SuggestForm.xml](SitecoreSuggest/sitecore/shell/Applications/Dialogs/Suggest/SuggestForm.xml) line 44-46. Very long texts might result in a unresponsive UI and might also give problems with the maximum token length depending on the model.
 
 ### Creativity
 
