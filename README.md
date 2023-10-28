@@ -121,15 +121,15 @@ SitecoreSuggest allow the content editor to input a custom prompt or to use the 
 
 The use case, as illustrated in the screenshot above is to create a content item, enter a title (e.g. "Sitecore Experience Platform") and then generate a summary of the title to use in the main text fields of a content item.
 
-The fields available for summary generating summaries are configured in the `Constants.cs` file using the `SummaryFields` array and is per default set to allow summaries from only single-line text fields. 
+The fields available for summary generating summaries are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) file using the `SummaryFields` array and is per default set to allow summaries from only single-line text fields. 
 
-Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. In no summary fields exist (or they are empty), the summary dropdown is grayed out.
+Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. In no summary fields exist (or they are empty), the summary dropdown is greyed out.
 
 ### Supported field
 
 When SitecoreSuggest has generated a suggestion, is it possible to either append or insert the suggestion into a field on the selected item. 
 
-The fields where appending and inserting are supported are configured in the `Constants.cs` filed in the `SupportedFields` array. The default configuration are `single-line text`, `multi-line text` and `rich text` fields. The field types that expect HTML (rich text) also need to be added to the `HtmlFields` array to allow SitecoreSuggest to format the suggestions using HTML. 
+The fields where appending and inserting are supported are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) filed in the `SupportedFields` array. The default configuration is `single-line text`, `multi-line text` and `rich text` fields. The field types that expect HTML (rich text) also need to be added to the `HtmlFields` array to allow SitecoreSuggest to format the suggestions using HTML. 
 
 
 
