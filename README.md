@@ -133,5 +133,4 @@ The fields where appending and inserting are supported are configured in the [Co
 
 ## Read more
 
-You can read more about SitecoreSuggest on my blog: https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai-and-chatgpt/
-
+You can read more about SitecoreSuggest on my blog: [https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai-and-chatgpt/](https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai/)
