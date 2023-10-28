@@ -123,7 +123,7 @@ The use case, as illustrated in the screenshot above is to create a content item
 
 The fields available for summary generating summaries are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) file using the `SummaryFields` array and is per default set to allow summaries from only single-line text fields. 
 
-Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. In no summary fields exist (or they are empty), the summary dropdown is greyed out.
+Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. If no summary fields exist (or they are empty), the summary dropdown is greyed out.
 
 ### Supported field
 
