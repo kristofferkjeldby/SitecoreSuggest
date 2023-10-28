@@ -89,7 +89,7 @@ Write summary of "Sitecore Experience Platform". Use about 100 words.
 
 With a chat model such instructions could also be put into the chat context as special "System" message, but to support the completions models Sitecore Suggest put it into a single prompt.
 
-The language of the prompt directs the GPT model to reply in the same language. This means that if support for other languages is needed, we need to add prompts for generation of summaries and restrict the word count. This is done in the [SitecoreSuggest/Languages.cs](Languages.cs) file. Out of the box SitecoreSuggest supports two languages (`en` and `da`). In other languages the *Suggest* button will be grayed out unless prompts are added for that language in the [SitecoreSuggest/Languages.cs](Languages.cs) file. 
+The language of the prompt directs the GPT model to reply in the same language. This means that if support for other languages is needed, we need to add prompts for generation of summaries and restrict the word count. This is done in the [Languages.cs](SitecoreSuggest/Languages.cs) file. Out of the box SitecoreSuggest supports two languages (`en` and `da`). In other languages the *Suggest* button will be grayed out unless prompts are added for that language in the [Languages.cs](SitecoreSuggest/Languages.cs) file. 
 
 ## Advanced settings
 
