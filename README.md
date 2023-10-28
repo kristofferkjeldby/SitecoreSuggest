@@ -56,7 +56,7 @@ The `Endpoint` ("completions" or "chat") and the `Model` settings are configured
       <!-- Please make sure to match the endpoint ("completions" or "chat") to the selected model as the model exposed by the endpoints are not the same -->
       <setting name="SitecoreSuggest.Endpoint" value="completions"/>
       <setting name="SitecoreSuggest.Model" value="text-davinci-003"/>
-      <setting name="SitecoreSuggest.MaxTokens" value="4096"/>
+      <setting name="SitecoreSuggest.MaxTokens" value="4097"/>
     </settings>
   </sitecore>
 </configuration>
@@ -68,14 +68,14 @@ Hence it is important to match the `Endpoint` (whether to call the completions o
 
 |Endpoint|Model|MaxTokens|
 |---|---|---|
-|completions|text-davinci-003|4096|
-|completions|text-davinci-002|4096|
+|completions|text-davinci-003|4097|
+|completions|text-davinci-002|4097|
 |completions|text-davinci-001|2049|
 |completions|text-curie-001|2049|
 |completions|text-babbage-001|2049|
 |completions|text-ada-001|2049|
-|chat|gpt-4|8192|
-|chat|gpt-3.5-turbo|4096|
+|chat|gpt-4|8193|
+|chat|gpt-3.5-turbo|4097|
 
 Some of the completions models are really old. The default model is set to `text-davinci-003` which is a completions model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
 
