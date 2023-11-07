@@ -20,6 +20,17 @@
         }
 
         /// <summary>
+        /// Determines whether usable for context.
+        /// </summary>
+        public static bool IsContext(this Field field)
+        {
+            if (!Constants.ContextFields.Contains(field.TypeKey))
+                return false;
+
+            return !string.IsNullOrEmpty(field?.GetValue(true));
+        }
+
+        /// <summary>
         /// Determines whether a field is supported.
         /// </summary>
         public static bool IsSupported(this Field field)

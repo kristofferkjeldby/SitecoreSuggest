@@ -91,7 +91,7 @@
                 prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(supportedLanguage.WordPrompt, words));
             }
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, temperature);
+            var suggestion = SuggestService.GenerateSuggestion(prompt, GenerateContext(payload), temperature);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
@@ -122,6 +122,17 @@
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Resolves the summary field value into a prompt.
+        /// </summary>
+        private static string[] GenerateContext(SuggestFormPayload payload)
+        {
+            var fields = payload.GetFields();
+            List<string> context = new List<string>();
+
+            return fields.Where(f => f.IsContext()).Select(f => f.GetValue(true)).ToArray();
         }
 
         /// <summary>

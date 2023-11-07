@@ -8,6 +8,9 @@
     using System.Text;
     using System;
     using Sitecore.Text;
+    using System.ServiceModel.Security;
+    using SitecoreSuggest.Models;
+    using Sitecore.Reflection.Emit;
 
     /// <summary>
     /// Implementation of a suggest service
@@ -68,7 +71,7 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, float temperature, string endpoint = null, string model = null)
+        public string GenerateSuggestion(string prompt, string[] context, float temperature, string endpoint = null, string model = null)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
@@ -83,7 +86,7 @@
                 return GenerateCompletions(prompt, temperature, model);
 
             if (endpoint.Equals(Constants.Chat))
-                return GenerateChat(prompt, temperature, model);
+                return GenerateChat(prompt, context, temperature, model);
 
 
             throw new ArgumentException($"Unsupported endpoint: {endpoint}");
@@ -113,24 +116,22 @@
         /// <summary>
         /// Generates the chat response.
         /// </summary>
-        private string GenerateChat(string prompt, float temperature, string model)
+        private string GenerateChat(string prompt, string[] context, float temperature, string model)
         {
-            var requestBody = new
+            var requestBody = new ChatRequest()
             {
-                messages = new[]
-                {
-                    new
-                    {
-                        role = "user",
-                        content = prompt
-                    }
-                },
-                max_tokens = MaxTokens - prompt.Length,
-                n = 1,
-                stop = (string)null,
-                temperature,
-                model
+                Temperature = temperature,
+                Model = model
             };
+
+            foreach (var c in context)
+            {
+                requestBody.Messages.Add(new ChatMessage() { Role = "system", Content = $"Context: {c}" });
+            }
+
+            requestBody.Messages.Add(new ChatMessage() { Role = "user", Content = prompt });
+
+            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.Length);
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/chat/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))

@@ -29,6 +29,15 @@
         };
 
         /// <summary>
+        /// The context fields (fields will be sent as part of the context)
+        /// </summary>
+        public static string[] ContextFields = new string[] {
+            "multi-line text",
+            "single-line text",
+            "rich text"
+        };
+
+        /// <summary>
         /// The API key Sitecore setting
         /// </summary>
         public static string ApiKeySetting = "SitecoreSuggest.ApiKey";

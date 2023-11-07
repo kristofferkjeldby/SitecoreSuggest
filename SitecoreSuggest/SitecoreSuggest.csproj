@@ -103,6 +103,8 @@
     <Compile Include="Extensions\FieldExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\SuggestFormPayloadExtensions.cs" />
+    <Compile Include="Models\ChatRequest.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
     <Compile Include="Models\Prompts.cs" />
     <Compile Include="Models\SuggestFormPayload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
