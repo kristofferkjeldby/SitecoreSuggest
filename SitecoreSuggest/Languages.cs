@@ -15,7 +15,7 @@
                 new Prompts()
                 {
                     SummaryPrompt = "Write summary of \"{0}\"",
-                    WordPrompt = "Use around \"{0}\" words"
+                    WordPrompt = "Use around {0} words"
                 }
             },
             {
@@ -23,7 +23,7 @@
                 new Prompts()
                 {
                     SummaryPrompt = "Skriv en opsummering om \"{0}\"",
-                    WordPrompt = "Brug omkring \"{0}\" ord"
+                    WordPrompt = "Brug omkring {0} ord"
                 }
             }
         };
