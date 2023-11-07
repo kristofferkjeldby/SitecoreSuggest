@@ -56,7 +56,7 @@ The `Endpoint` ("completions" or "chat") and the `Model` settings are configured
       <!-- Please make sure to match the endpoint ("completions" or "chat") to the selected model as the model exposed by the endpoints are not the same -->
       <setting name="SitecoreSuggest.Endpoint" value="completions"/>
       <setting name="SitecoreSuggest.Model" value="text-davinci-003"/>
-      <setting name="SitecoreSuggest.MaxTokens" value="4096"/>
+      <setting name="SitecoreSuggest.MaxTokens" value="4097"/>
     </settings>
   </sitecore>
 </configuration>
@@ -68,14 +68,14 @@ Hence it is important to match the `Endpoint` (whether to call the completions o
 
 |Endpoint|Model|MaxTokens|
 |---|---|---|
-|completions|text-davinci-003|4096|
-|completions|text-davinci-002|4096|
+|completions|text-davinci-003|4097|
+|completions|text-davinci-002|4097|
 |completions|text-davinci-001|2049|
 |completions|text-curie-001|2049|
 |completions|text-babbage-001|2049|
 |completions|text-ada-001|2049|
-|chat|gpt-4|8192|
-|chat|gpt-3.5-turbo|4096|
+|chat|gpt-4|8193|
+|chat|gpt-3.5-turbo|4097|
 
 Some of the completions models are really old. The default model is set to `text-davinci-003` which is a completions model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
 
@@ -87,7 +87,7 @@ When sending a prompt to Open AI, SitecoreSuggest does some "prompt engineering"
 Write summary of "Sitecore Experience Platform". Use about 100 words.
 ```
 
-With a chat model such instructions could also be put into the chat context as special "System" message, but to support the completions models Sitecore Suggest put it into a single prompt.
+With a chat model such instructions could also be put into the chat context as special "System" message, but to support the completions models SitecoreSuggest put it into a single prompt.
 
 The language of the prompt directs the GPT model to reply in the same language. This means that if support for other languages is needed, we need to add prompts for generation of summaries and restrict the word count. This is done in the [Languages.cs](SitecoreSuggest/Languages.cs) file. Out of the box SitecoreSuggest supports two languages (`en` and `da`). In other languages the *Suggest* button will be grayed out unless prompts are added for that language in the [Languages.cs](SitecoreSuggest/Languages.cs) file. 
 
@@ -121,9 +121,9 @@ SitecoreSuggest allow the content editor to input a custom prompt or to use the 
 
 The use case, as illustrated in the screenshot above is to create a content item, enter a title (e.g. "Sitecore Experience Platform") and then generate a summary of the title to use in the main text fields of a content item.
 
-The fields available for summary generating summaries are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) file using the `SummaryFields` array and is per default set to allow summaries from only single-line text fields. 
+The fields available for generating summaries are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) file using the `SummaryFields` array and is per default set to allow summaries from only `single-line text` fields. 
 
-Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. In no summary fields exist (or they are empty), the summary dropdown is greyed out.
+Notice that the summary dropdown will only display the first 70 chars of the field, but the content of the entire field will be used when generating summaries. If no summary fields exist (or they are empty), the summary dropdown is greyed out.
 
 ### Supported field
 
@@ -131,6 +131,6 @@ When SitecoreSuggest has generated a suggestion, is it possible to either append
 
 The fields where appending and inserting are supported are configured in the [Constants.cs](SitecoreSuggest/Constants.cs) filed in the `SupportedFields` array. The default configuration is `single-line text`, `multi-line text` and `rich text` fields. The field types that expect HTML (rich text) also need to be added to the `HtmlFields` array to allow SitecoreSuggest to format the suggestions using HTML. 
 
+## Read more
 
-
-
+You can read more about SitecoreSuggest on my blog: [https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai-and-chatgpt/](https://www.kjeldby.dk/2023/10/integrating-sitecore-with-generative-ai/)
