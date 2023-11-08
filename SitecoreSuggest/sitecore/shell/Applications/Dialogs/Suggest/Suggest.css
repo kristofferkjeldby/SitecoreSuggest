@@ -44,6 +44,10 @@
     padding: 0px 0px 5px 0px;
 }
 
+.sitecoreSuggest_Checkbox {
+    margin-bottom: 15px;
+}
+
 .sitecoreSuggest_Input {
     margin-bottom: 10px;
     padding-left: 8px;

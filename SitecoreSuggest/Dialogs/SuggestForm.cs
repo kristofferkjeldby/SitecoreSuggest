@@ -25,6 +25,8 @@
         protected Literal NameLiteral;
         protected Literal ModelLiteral;
         protected Edit PromptEdit;
+        protected Panel ContextPanel;
+        protected Checkbox ContextCheckbox;
         protected Combobox SummaryFieldIdCombobox;
         protected Combobox WordsCombobox;
         protected Combobox TemperatureCombobox;
@@ -57,6 +59,7 @@
             this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
             this.ModelLiteral.Text = SuggestService.Model;
+            this.ContextPanel.Visible = SuggestService.SupportsContext;
 
             BindFields(payload);
         }
@@ -66,21 +69,22 @@
         /// </summary>
         protected void Generate(bool append)
         {
-            var words = WordsCombobox.SelectedItem.Value.ParseInt(SitecoreSuggest.Constants.DefaultWords);
             var temperature = TemperatureCombobox.SelectedItem.Value.ParseFloat(SitecoreSuggest.Constants.DefaultTemperature);
-            var prompt = PromptEdit.Value;
+            string prompt = PromptEdit.Value.Trim();
             var payload = GetPayload();
+            string[] context = null;
 
             // If no prompt is entered, generate one from the summary field
             if (string.IsNullOrEmpty(prompt))
             {
                 var summaryFieldId = SummaryFieldIdCombobox.SelectedItem.Value;
-
                 prompt = GenerateSummaryFieldPrompt(payload, summaryFieldId);
             }
-
-            // Trim the prompt
-            prompt = prompt.Trim();
+            else
+            {
+                if (ContextCheckbox.Checked && SuggestService.SupportsContext)
+                    context = GenerateContext(payload);
+            }
 
             if (string.IsNullOrEmpty(prompt))
                 return;
@@ -88,10 +92,11 @@
             // Add word prompt
             if (Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
             {
-                prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(supportedLanguage.WordPrompt, words));
+                if (int.TryParse(WordsCombobox.SelectedItem.Value, out var words))
+                    prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(supportedLanguage.WordPrompt, words));
             }
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, GenerateContext(payload), temperature);
+            var suggestion = SuggestService.GenerateSuggestion(prompt, context, temperature);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
@@ -125,14 +130,17 @@
         }
 
         /// <summary>
-        /// Resolves the summary field value into a prompt.
+        /// Generates the context
         /// </summary>
         private static string[] GenerateContext(SuggestFormPayload payload)
         {
-            var fields = payload.GetFields();
-            List<string> context = new List<string>();
+            if (!Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
+                return null;
 
-            return fields.Where(f => f.IsContext()).Select(f => f.GetValue(true)).ToArray();
+            return payload.GetFields().
+                Where(field => field.IsContextField()).
+                Select(field => string.Format(supportedLanguage.ContextPrompt, field.GetValueAsString(true))).
+                ToArray();
         }
 
         /// <summary>
@@ -188,7 +196,6 @@
                 combobox.Controls.Add(new ListItem() { Header = shortValue, Value = field.ID.ToString() });
             }
         }
-
 
         /// <summary>
         /// Binds the fields to a combobox

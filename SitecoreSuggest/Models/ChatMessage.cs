@@ -8,6 +8,15 @@
     public class ChatMessage
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ChatMessage"/> class.
+        /// </summary>
+        public ChatMessage(string role, string content)
+        {
+            Role = role;
+            Content = content;
+        }
+
+        /// <summary>
         /// Gets or sets the role.
         /// </summary>
         [JsonProperty("role")]

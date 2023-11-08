@@ -2,15 +2,14 @@
 {
     using Newtonsoft.Json;
     using Sitecore.Diagnostics;
+    using Sitecore.Extensions;
+    using SitecoreSuggest.Extensions;
+    using SitecoreSuggest.Models;
+    using System;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Text;
-    using System;
-    using Sitecore.Text;
-    using System.ServiceModel.Security;
-    using SitecoreSuggest.Models;
-    using Sitecore.Reflection.Emit;
 
     /// <summary>
     /// Implementation of a suggest service
@@ -45,9 +44,19 @@
         public int MaxTokens { get; set; }
 
         /// <summary>
+        /// Gets or sets the reserved tokens.
+        /// </summary>
+        public int ReservedTokens { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the service supports context.
+        /// </summary>
+        public bool SupportsContext => Endpoint.Equals(Constants.Chat);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SuggestService"/> class.
         /// </summary>
-        public SuggestService(string baseUrl = null, string endpoint = null, string model = null, string apiKey = null, int? maxTokens = null)
+        public SuggestService(string baseUrl = null, string endpoint = null, string model = null , string apiKey = null, int? maxTokens = null, int? reservedTokens = null)
         {
             BaseUrl = baseUrl ?? Sitecore.Configuration.Settings.GetSetting(Constants.BaseUrlSetting);
             Assert.IsNotNull(BaseUrl, nameof(BaseUrl));
@@ -63,6 +72,7 @@
             Assert.IsNotNull(ApiKey, nameof(apiKey));
 
             MaxTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.MaxTokensSetting, 4096);
+            ReservedTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.ReservedTokensSetting, 1024);
 
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
@@ -71,25 +81,18 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, string[] context, float temperature, string endpoint = null, string model = null)
+        public string GenerateSuggestion(string prompt, string[] context, float temperature)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
 
-            if (string.IsNullOrWhiteSpace(endpoint))
-                endpoint = Endpoint;
+            if (Endpoint.Equals(Constants.Completions))
+                return GenerateCompletions(prompt, temperature, Model);
 
-            if (string.IsNullOrWhiteSpace(model))
-                model = Model;
+            if (Endpoint.Equals(Constants.Chat))
+                return GenerateChat(prompt, context, temperature, Model);
 
-            if (endpoint.Equals(Constants.Completions))
-                return GenerateCompletions(prompt, temperature, model);
-
-            if (endpoint.Equals(Constants.Chat))
-                return GenerateChat(prompt, context, temperature, model);
-
-
-            throw new ArgumentException($"Unsupported endpoint: {endpoint}");
+            throw new ArgumentException($"Unsupported endpoint: {Endpoint}");
         }
 
         /// <summary>
@@ -97,14 +100,12 @@
         /// </summary>
         private string GenerateCompletions(string prompt, float temperature, string model)
         {
-            var requestBody = new
+            var requestBody = new CompletionsRequest()
             {
-                prompt,
-                max_tokens = MaxTokens - prompt.Length,
-                n = 1,
-                stop = (string)null,
-                temperature,
-                model
+                Prompt = prompt,
+                Temperature = temperature,
+                Model = model,
+                MaxTokens = MaxTokens - prompt.EstimateTokens() 
             };
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/completions"), out var errorMessage);
@@ -124,14 +125,29 @@
                 Model = model
             };
 
-            foreach (var c in context)
-            {
-                requestBody.Messages.Add(new ChatMessage() { Role = "system", Content = $"Context: {c}" });
+            if (context != null)
+                requestBody.Messages.AddRange(context.Select(c => new ChatMessage("system", c)));
+
+            // So if the MaxTokens is 4097 and our prompt is 10 tokens and we want to reserve 1024 tokens for the response
+            // We will add 3063 tokens worth of context
+
+            if (context != null)
+            { 
+                var contextTokens = MaxTokens - (ReservedTokens + prompt.EstimateTokens());
+                foreach (var c in context)
+                {
+                    contextTokens =- c.EstimateTokens();
+
+                    if (contextTokens < 0)
+                        break;
+
+                    requestBody.Messages.Add(new ChatMessage("system", c));
+                }
             }
 
-            requestBody.Messages.Add(new ChatMessage() { Role = "user", Content = prompt });
+            requestBody.Messages.Add(new ChatMessage("user", prompt));
 
-            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.Length);
+            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.EstimateTokens());
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/chat/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))

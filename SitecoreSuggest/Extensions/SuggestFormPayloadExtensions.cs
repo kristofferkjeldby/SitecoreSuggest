@@ -50,7 +50,7 @@
             {
                 var field = f as Field;
 
-                if (field.IsSupported())
+                if (field.IsInsertField())
                     fields.Add(field);
             }
 
@@ -83,7 +83,7 @@
 
             var suggestion = payload.Suggestion;
 
-            if (field.IsHtml())
+            if (field.IsHtmlField())
                 suggestion = suggestion.ToHtml();
 
             using (new EditContext(item))

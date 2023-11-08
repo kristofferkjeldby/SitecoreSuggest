@@ -28,6 +28,11 @@
 
           <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
 
+          <Panel ID="ContextPanel" class="sitecoreSuggest_Checkbox">
+              <Checkbox ID="ContextCheckbox"/>
+              Include context
+          </Panel>
+          
           <div class="sitecoreSuggest_Label">
             Or write a summary of:
           </div>
@@ -37,10 +42,11 @@
           </Combobox>
 
           <div class="sitecoreSuggest_Label">
-            And make the text this long:
+            Make the text this long:
           </div>
           
           <Combobox ID="WordsCombobox" class="sitecoreSuggest_Input" Width="100%">
+            <ListItem Value="" Header=""/>
             <ListItem Value="20" Header="Short"/>
             <ListItem Value="100" Selected="true" Header="Medium"/>
             <ListItem Value="700" Header="Long"/>
@@ -54,6 +60,7 @@
             <ListItem Value="0.2" Header="Low"/>
             <ListItem Value="0.5" Selected="true" Header="Medium"/>
             <ListItem Value="0.8" Header="High"/>
+            <ListItem Value="1.2" Header="Wild"/>
           </Combobox>
 
           <Button ID="GenerateButton" Click="GenerateClick" class="scButton scButtonPrimary" Header="Generate" />

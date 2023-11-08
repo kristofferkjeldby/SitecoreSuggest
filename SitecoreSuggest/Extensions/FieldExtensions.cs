@@ -1,6 +1,7 @@
 ﻿namespace SitecoreSuggest.Extensions
 {
     using Sitecore.Data.Fields;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -9,47 +10,64 @@
     public static class FieldExtensions
     {
         /// <summary>
-        /// Determines whether usable for summaries.
+        /// Determines whether the field is usable for summaries.
         /// </summary>
         public static bool IsSummary(this Field field)
         {
-            if (!Constants.SummaryFields.Contains(field.TypeKey))
-                return false;
-
-            return !string.IsNullOrEmpty(field?.GetValue(true));
+            return field.MatchConditions(Constants.SummaryFields);
         }
 
         /// <summary>
-        /// Determines whether usable for context.
+        /// Determines whether the field is usable for context.
         /// </summary>
-        public static bool IsContext(this Field field)
+        public static bool IsContextField(this Field field)
         {
-            if (!Constants.ContextFields.Contains(field.TypeKey))
-                return false;
-
-            return !string.IsNullOrEmpty(field?.GetValue(true));
+            return field.MatchConditions(Constants.ContextFields);
         }
 
         /// <summary>
-        /// Determines whether a field is supported.
+        /// Determines whether the field is usable for inserting.
         /// </summary>
-        public static bool IsSupported(this Field field)
+        public static bool IsInsertField(this Field field)
+        {
+            return field.MatchConditions(Constants.InsertFields, true);
+        }
+
+        /// <summary>
+        /// Determines whether a field matches conditions.
+        /// </summary>
+        public static bool MatchConditions(this Field field, IEnumerable<string> typeKeys, bool allowEmpty = false, bool allowSystemFields = false)
         {
             if (field == null)
                 return false;
 
-            if (field.Name.StartsWith("__"))
+            if (field.Name.StartsWith("__") && !allowSystemFields)
                 return false;
 
-            return Constants.SupportedFields.Contains(field.TypeKey);
+            if (!typeKeys.Contains(field.TypeKey))
+                return false;
+
+            if (allowEmpty)
+                return true;
+
+            return !string.IsNullOrEmpty(field?.GetValue(true));
         }
 
         /// <summary>
         /// Determines whether a field is a HTML field.
         /// </summary>
-        public static bool IsHtml(this Field field)
+        public static bool IsHtmlField(this Field field)
         {
             return Constants.HtmlFields.Contains(field.TypeKey);
+        }
+
+        /// <summary>
+        /// Determines whether a field is a HTML field.
+        /// </summary>
+        public static string GetValueAsString(this Field field, bool allowStandardValue)
+        {
+            var value = field.GetValue(allowStandardValue);
+            return field.IsHtmlField() ? value.FromHtml() : value;
         }
 
         /// <summary>

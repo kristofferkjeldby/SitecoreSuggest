@@ -8,22 +8,24 @@
     /// </summary>
     public static class Languages
     {
-        public static Dictionary<string, Prompts> SupportedLanguages = new Dictionary<string, Prompts>()
+        public static Dictionary<string, LanguagePrompts> SupportedLanguages = new Dictionary<string, LanguagePrompts>()
         {
             {
                 "en",
-                new Prompts()
+                new LanguagePrompts()
                 {
                     SummaryPrompt = "Write summary of \"{0}\"",
-                    WordPrompt = "Use around {0} words"
+                    WordPrompt = "Use around {0} words",
+                    ContextPrompt = "Context: {0}"
                 }
             },
             {
                 "da",
-                new Prompts()
+                new LanguagePrompts()
                 {
                     SummaryPrompt = "Skriv en opsummering om \"{0}\"",
-                    WordPrompt = "Brug omkring {0} ord"
+                    WordPrompt = "Brug omkring {0} ord",
+                    ContextPrompt = "Kontekst: {0}"
                 }
             }
         };

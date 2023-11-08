@@ -6,34 +6,34 @@
     public static class Constants
     {
         /// <summary>
-        /// The supported fields (fields that we would like to use suggestions in)
+        /// The supported fields for inserting (fields that we would like to use suggestions in)
         /// </summary>
-        public static string[] SupportedFields = new string[] {
+        public static string[] InsertFields = new string[] {
             "multi-line text",
             "single-line text",
             "rich text"
         };
 
         /// <summary>
-        /// The supported summary field (fields that we would like use for generating summaries)
+        /// The supported fields for summaries  (fields that we would like use for generating summaries)
         /// </summary>
         public static string[] SummaryFields = new string[] {
             "single-line text",
         };
 
         /// <summary>
-        /// The fields we need to support HTML for
-        /// </summary>
-        public static string[] HtmlFields = new string[] {
-            "rich text"
-        };
-
-        /// <summary>
-        /// The context fields (fields will be sent as part of the context)
+        /// The supported context fields (fields will be sent as part of the context)
         /// </summary>
         public static string[] ContextFields = new string[] {
             "multi-line text",
             "single-line text",
+            "rich text"
+        };
+
+        /// <summary>
+        /// The fields we need to support HTML for
+        /// </summary>
+        public static string[] HtmlFields = new string[] {
             "rich text"
         };
 
@@ -61,6 +61,11 @@
         /// The max tokens Sitecore setting
         /// </summary>
         public static string MaxTokensSetting = "SitecoreSuggest.MaxTokens";
+
+        /// <summary>
+        /// The reserved token Sitecore setting (for assistent message)
+        /// </summary>
+        public static string ReservedTokensSetting = "SitecoreSuggest.ReservedTokens";
 
         /// <summary>
         /// The default temperature

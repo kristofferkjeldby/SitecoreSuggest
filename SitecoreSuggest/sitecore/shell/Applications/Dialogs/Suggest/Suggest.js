@@ -4,6 +4,7 @@ function sitecoreSuggest_onLoad(event) {
 
     let summaryFieldIdCombobox = document.getElementById("SummaryFieldIdCombobox");
     let promptEdit = document.getElementById("PromptEdit");
+    let contextCheckbox = document.getElementById("ContextCheckbox");
     let generateButton = document.getElementById("GenerateButton");
     let generateMoreButton = document.getElementById("GenerateMoreButton");
     let suggestionMemo = document.getElementById("SuggestionMemo");
@@ -23,8 +24,9 @@ function sitecoreSuggest_onLoad(event) {
         const disabled = summaryFieldIdCombobox.value.length == 0 && promptEdit.value.length == 0;
         generateButton.disabled = disabled;
         promptEdit.disabled = summaryFieldIdCombobox.value.length > 0;
-        summaryFieldIdCombobox.disabled = promptEdit.value.length > 0;
-        summaryFieldIdCombobox.disabled = summaryFieldIdCombobox.length == 1;
+        if (contextCheckbox)
+            contextCheckbox.disabled = summaryFieldIdCombobox.value.length > 0;
+        summaryFieldIdCombobox.disabled = promptEdit.value.length > 0 || summaryFieldIdCombobox.length == 1;
     }
 
     // Enable append and replace buttons if field is selected

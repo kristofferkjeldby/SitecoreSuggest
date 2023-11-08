@@ -23,14 +23,11 @@
         }
 
         /// <summary>
-        /// Parses to int.
+        /// Converts from html.
         /// </summary>
-        public static int ParseInt(this string text, int defaultValue)
+        public static string FromHtml(this string value)
         {
-            if (int.TryParse(text, out var value))
-                return value;
-
-            return defaultValue;
+            return Sitecore.StringUtil.RemoveTags(value);
         }
 
         /// <summary>
@@ -50,6 +47,17 @@
         public static string Append(this string value, string text)
         {
             return string.Concat(value, Environment.NewLine, Environment.NewLine, text);
+        }
+
+        /// <summary>
+        /// Estimates the number of tokens.
+        /// </summary>
+        public static int EstimateTokens(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return 0;
+
+            return value.Split(' ').Length * 4;
         }
     }
 }

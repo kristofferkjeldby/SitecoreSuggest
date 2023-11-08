@@ -1,9 +1,9 @@
 ﻿namespace SitecoreSuggest.Models
 {
     /// <summary>
-    /// Prompts
+    /// Language prompts
     /// </summary>
-    public class Prompts
+    public class LanguagePrompts
     {
         /// <summary>
         /// Gets or sets the summary prompt.
@@ -14,5 +14,10 @@
         /// Gets or sets the word prompt.
         /// </summary>
         public string WordPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the context prompt.
+        /// </summary>
+        public string ContextPrompt { get; set; }
     }
 }
