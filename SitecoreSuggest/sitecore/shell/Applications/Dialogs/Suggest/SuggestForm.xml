@@ -29,22 +29,30 @@
           <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
 
           <Panel ID="ContextPanel" class="sitecoreSuggest_Checkbox">
-              <Checkbox ID="ContextCheckbox"/>
-              Include context
+            <Checkbox ID="ContextCheckbox"/>
+            Include context
           </Panel>
-          
+
+        </div>
+
+        <div class="sitecoreSuggest_Section sitecoreSuggest_InputSection">
+
           <div class="sitecoreSuggest_Label">
             Or write a summary of:
           </div>
-        
+
           <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Combobox" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
 
+        </div>
+
+        <div class="sitecoreSuggest_Section sitecoreSuggest_InputSection">
+
           <div class="sitecoreSuggest_Label">
             Make the text this long:
           </div>
-          
+
           <Combobox ID="WordsCombobox" class="sitecoreSuggest_Input" Width="100%">
             <ListItem Value="" Header=""/>
             <ListItem Value="20" Header="Short"/>

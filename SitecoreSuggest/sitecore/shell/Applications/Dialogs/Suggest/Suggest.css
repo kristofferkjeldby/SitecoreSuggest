@@ -45,7 +45,7 @@
 }
 
 .sitecoreSuggest_Checkbox {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 .sitecoreSuggest_Input {
@@ -75,7 +75,7 @@
 .sitecoreSuggest_Section {
     border: 1px #dddddd solid;
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 10px 10px 15px 10px;
 }
 
 .sitecoreSuggest_InputSection {

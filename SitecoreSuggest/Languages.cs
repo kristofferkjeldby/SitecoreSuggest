@@ -14,7 +14,7 @@
                 "en",
                 new LanguagePrompts()
                 {
-                    SummaryPrompt = "Write summary of \"{0}\"",
+                    SummaryPrompt = "Write summary of {0}",
                     WordPrompt = "Use around {0} words",
                     ContextPrompt = "Context: {0}"
                 }
@@ -23,7 +23,7 @@
                 "da",
                 new LanguagePrompts()
                 {
-                    SummaryPrompt = "Skriv en opsummering om \"{0}\"",
+                    SummaryPrompt = "Skriv en opsummering af {0}",
                     WordPrompt = "Brug omkring {0} ord",
                     ContextPrompt = "Kontekst: {0}"
                 }
