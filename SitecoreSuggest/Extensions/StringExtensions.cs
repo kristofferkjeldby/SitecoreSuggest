@@ -1,7 +1,9 @@
 ﻿namespace SitecoreSuggest.Extensions
 {
+    using Sitecore.Shell.Applications.ContentEditor;
     using System;
     using System.Globalization;
+    using System.Linq;
 
     /// <summary>
     /// Extensions for strings
@@ -57,7 +59,21 @@
             if (string.IsNullOrEmpty(value))
                 return 0;
 
-            return value.Split(' ').Length * 4;
+            var tokens = value.Count(c => Constants.TokenChars.Contains(c));
+
+            foreach(var word in value.Split(Constants.TokenSplitChars))
+            {
+                // Number are typically tokenized in pairs of three
+                if (word.All(c => char.IsDigit(c)))
+                {
+                    tokens += Convert.ToInt32(Math.Ceiling(word.Length / 3f));
+                    continue;
+                }
+
+                tokens += Constants.TokensPerWord;
+            }
+
+            return tokens;
         }
     }
 }

@@ -73,9 +73,19 @@
         public static float DefaultTemperature = 0.5f;
 
         /// <summary>
-        /// The default number of words in a suggestion
+        /// The estimated tokens per word
         /// </summary>
-        public static int DefaultWords = 2000;
+        public static int TokensPerWord = 2;
+
+        /// <summary>
+        /// The token chars
+        /// </summary>
+        public static char[] TokenChars = new[] { '.', ',', ';', ':', '!', '-' };
+
+        /// <summary>
+        /// The split token chars
+        /// </summary>
+        public static char[] TokenSplitChars = new[] { ' ', '\'', '.', ',', ';', ':', '!', '-' };
 
         /// <summary>
         /// When generating summaries we will display this number of chars in the dropdown
