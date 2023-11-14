@@ -30,9 +30,9 @@
         /// <summary>
         /// Gets the language.
         /// </summary>
-        public static Language GetLanguage(this SuggestFormPayload payload)
+        public static Sitecore.Globalization.Language GetLanguage(this SuggestFormPayload payload)
         {
-            return Language.Parse(payload.Language);
+            return Sitecore.Globalization.Language.Parse(payload.Language);
         }
 
         /// <summary>

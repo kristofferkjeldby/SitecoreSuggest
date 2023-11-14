@@ -73,11 +73,6 @@
         public static float DefaultTemperature = 0.5f;
 
         /// <summary>
-        /// The estimated tokens per word
-        /// </summary>
-        public static int TokensPerWord = 2;
-
-        /// <summary>
         /// The token chars
         /// </summary>
         public static char[] TokenChars = new[] { '.', ',', ';', ':', '!', '-' };

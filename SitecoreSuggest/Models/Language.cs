@@ -3,7 +3,7 @@
     /// <summary>
     /// Language prompts
     /// </summary>
-    public class LanguagePrompts
+    public class Language
     {
         /// <summary>
         /// Gets or sets the summary prompt.
@@ -19,5 +19,10 @@
         /// Gets or sets the context prompt.
         /// </summary>
         public string ContextPrompt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tokens per word.
+        /// </summary>
+        public float TokensPerWord { get; set; }
     }
 }

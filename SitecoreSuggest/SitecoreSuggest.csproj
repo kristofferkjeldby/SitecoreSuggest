@@ -107,7 +107,7 @@
     <Compile Include="Models\CompletionsRequest.cs" />
     <Compile Include="Models\ChatRequest.cs" />
     <Compile Include="Models\ChatMessage.cs" />
-    <Compile Include="Models\LanguagePrompts.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\SuggestFormPayload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SuggestService.cs" />

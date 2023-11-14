@@ -81,16 +81,16 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, string[] context, float temperature)
+        public string GenerateSuggestion(string prompt, string[] context, float temperature, Language language)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
 
             if (Endpoint.Equals(Constants.Completions))
-                return GenerateCompletions(prompt, temperature, Model);
+                return GenerateCompletions(prompt, temperature, Model, language);
 
             if (Endpoint.Equals(Constants.Chat))
-                return GenerateChat(prompt, context, temperature, Model);
+                return GenerateChat(prompt, context, temperature, Model, language);
 
             throw new ArgumentException($"Unsupported endpoint: {Endpoint}");
         }
@@ -98,14 +98,14 @@
         /// <summary>
         /// Generates the completions response.
         /// </summary>
-        private string GenerateCompletions(string prompt, float temperature, string model)
+        private string GenerateCompletions(string prompt, float temperature, string model, Language language)
         {
             var requestBody = new CompletionsRequest()
             {
                 Prompt = prompt,
                 Temperature = temperature,
                 Model = model,
-                MaxTokens = MaxTokens - prompt.EstimateTokens() 
+                MaxTokens = MaxTokens - prompt.EstimateTokens(language) 
             };
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/completions"), out var errorMessage);
@@ -117,7 +117,7 @@
         /// <summary>
         /// Generates the chat response.
         /// </summary>
-        private string GenerateChat(string prompt, string[] context, float temperature, string model)
+        private string GenerateChat(string prompt, string[] context, float temperature, string model, Language language)
         {
             var requestBody = new ChatRequest()
             {
@@ -133,10 +133,10 @@
 
             if (context != null)
             { 
-                var contextTokens = MaxTokens - (ReservedTokens + prompt.EstimateTokens());
+                var contextTokens = MaxTokens - (ReservedTokens + prompt.EstimateTokens(language));
                 foreach (var c in context)
                 {
-                    contextTokens =- c.EstimateTokens();
+                    contextTokens =- c.EstimateTokens(language);
 
                     if (contextTokens < 0)
                         break;
@@ -147,7 +147,7 @@
 
             requestBody.Messages.Add(new ChatMessage("user", prompt));
 
-            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.EstimateTokens());
+            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.EstimateTokens(language));
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/chat/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))

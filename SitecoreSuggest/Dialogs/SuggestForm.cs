@@ -74,6 +74,9 @@
             var payload = GetPayload();
             string[] context = null;
 
+            if (!Languages.SupportedLanguages.TryGetValue(payload.Language, out var language))
+                return;
+
             // If no prompt is entered, generate one from the summary field
             if (string.IsNullOrEmpty(prompt))
             {
@@ -89,14 +92,10 @@
             if (string.IsNullOrEmpty(prompt))
                 return;
 
-            // Add word prompt
-            if (Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
-            {
-                if (int.TryParse(WordsCombobox.SelectedItem.Value, out var words))
-                    prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(supportedLanguage.WordPrompt, words));
-            }
+            if (int.TryParse(WordsCombobox.SelectedItem.Value, out var words))
+                prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(language.WordPrompt, words));
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, context, temperature);
+            var suggestion = SuggestService.GenerateSuggestion(prompt, context, temperature, language);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
