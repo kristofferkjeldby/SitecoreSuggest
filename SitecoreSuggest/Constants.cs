@@ -106,5 +106,10 @@
         /// The chat model keyword
         /// </summary>
         public static string Chat = "chat";
+
+        /// <summary>
+        /// The time out in seconds
+        /// </summary>
+        public static int TimeOut = 300;
     }
 }

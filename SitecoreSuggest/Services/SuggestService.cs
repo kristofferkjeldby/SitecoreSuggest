@@ -75,6 +75,7 @@
             ReservedTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.ReservedTokensSetting, 1024);
 
             httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(Constants.TimeOut);
             httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
         }
 

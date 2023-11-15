@@ -17,7 +17,7 @@
                     SummaryPrompt = "Write summary of {0}",
                     WordPrompt = "Use around {0} words",
                     ContextPrompt = "Context: {0}",
-                    TokensPerWord = 2
+                    TokensPerWord = 2.5f
                 }
             },
             {
