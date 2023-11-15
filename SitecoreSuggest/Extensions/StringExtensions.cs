@@ -74,7 +74,7 @@
                 tokens += language.TokensPerWord;
             }
 
-            return Convert.ToInt32(tokens);
+            return Convert.ToInt32(Math.Ceiling(tokens));
         }
     }
 }
