@@ -74,8 +74,8 @@ Hence it is important to match the `Endpoint` (whether to call the completions o
 |completions|text-curie-001|2049|
 |completions|text-babbage-001|2049|
 |completions|text-ada-001|2049|
-|chat|gpt-4|8193|
-|chat|gpt-3.5-turbo|4097|
+|chat|gpt-4|(8193)|
+|chat|gpt-3.5-turbo|(4097)|
 
 Some of the completions models are really old. The default model is set to `text-davinci-003` which is a completions model comparable to the `gpt-3.5-turbo` model (commonly referred to as ChatGPT), but without is multi-turn capability (that is back-and-forth chatting). 
 

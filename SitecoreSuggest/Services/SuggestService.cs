@@ -125,7 +125,6 @@
                         content = prompt
                     }
                 },
-                max_tokens = MaxTokens - prompt.Length,
                 n = 1,
                 stop = (string)null,
                 temperature,
