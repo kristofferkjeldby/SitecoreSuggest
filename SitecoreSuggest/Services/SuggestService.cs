@@ -131,7 +131,6 @@
 
             // So if the MaxTokens is 4097 and our prompt is 10 tokens and we want to reserve 1024 tokens for the response
             // We will add 3063 tokens worth of context
-
             if (context != null)
             { 
                 var contextTokens = MaxTokens - (ReservedTokens + prompt.EstimateTokens(language));
@@ -147,8 +146,6 @@
             }
 
             requestBody.Messages.Add(new ChatMessage("user", prompt));
-
-            requestBody.MaxTokens = MaxTokens - requestBody.Messages.Sum(m => m.Content.EstimateTokens(language));
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/chat/completions"), out var errorMessage);
             if (!string.IsNullOrEmpty(errorMessage))
