@@ -48,19 +48,24 @@
         public static string BaseUrlSetting = "SitecoreSuggest.BaseUrl";
 
         /// <summary>
-        /// The endpoint Sitecore setting
+        /// The completions model Sitecore setting
         /// </summary>
-        public static string EndpointSetting = "SitecoreSuggest.Endpoint";
+        public static string CompletionsModelSetting = "SitecoreSuggest.CompletionsModel";
 
         /// <summary>
-        /// The model Sitecore setting
+        /// The completions model max tokens Sitecore setting
         /// </summary>
-        public static string ModelSetting = "SitecoreSuggest.Model";
+        public static string CompletionsMaxTokensSetting = "SitecoreSuggest.CompletionsMaxTokens";
 
         /// <summary>
-        /// The max tokens Sitecore setting
+        /// The chat model Sitecore setting
         /// </summary>
-        public static string MaxTokensSetting = "SitecoreSuggest.MaxTokens";
+        public static string ChatModelSetting = "SitecoreSuggest.ChatModel";
+
+        /// <summary>
+        /// The chat model max tokens Sitecore setting
+        /// </summary>
+        public static string ChatMaxTokensSetting = "SitecoreSuggest.ChatMaxTokens";
 
         /// <summary>
         /// The reserved token Sitecore setting (for assistent message)

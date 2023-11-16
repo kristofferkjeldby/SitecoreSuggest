@@ -19,8 +19,8 @@ namespace SitecoreSuggest.Models
         /// <summary>
         /// Gets or sets the maximum tokens.
         /// </summary>
-        [JsonProperty("max_tokens")]
-        public int MaxTokens { get; set; }
+        [JsonProperty("max_tokens", NullValueHandling = NullValueHandling.Ignore)]
+        public int? MaxTokens { get; set; }
 
         /// <summary>
         /// Gets or sets the n.

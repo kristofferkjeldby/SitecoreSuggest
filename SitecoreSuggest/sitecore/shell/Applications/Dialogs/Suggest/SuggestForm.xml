@@ -16,7 +16,7 @@
             <Literal ID="NameLiteral"/>
           </div>
           <div class="sitecoreSuggest_HeaderColumn sitecoreSuggest_HeaderModelColumn">
-            Model: <Literal ID="ModelLiteral"/>
+            Models: <Literal ID="CompletionsModelLiteral"/>/<Literal ID="ChatModelLiteral"/>
           </div>
         </div>
 
@@ -28,10 +28,10 @@
 
           <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
 
-          <Panel ID="ContextPanel" class="sitecoreSuggest_Checkbox">
+          <div class="sitecoreSuggest_Checkbox">
             <Checkbox ID="ContextCheckbox"/>
-            Include context
-          </Panel>
+            Use chat model and include context
+          </div>
 
         </div>
 

@@ -23,7 +23,8 @@
     {
         protected Image IconImage;
         protected Literal NameLiteral;
-        protected Literal ModelLiteral;
+        protected Literal CompletionsModelLiteral;
+        protected Literal ChatModelLiteral;
         protected Edit PromptEdit;
         protected Panel ContextPanel;
         protected Checkbox ContextCheckbox;
@@ -58,8 +59,8 @@
             var item = payload.GetItem();
             this.IconImage.Src = item.GetLargeIconUrl();
             this.NameLiteral.Text = item.Name;
-            this.ModelLiteral.Text = SuggestService.Model;
-            this.ContextPanel.Visible = SuggestService.SupportsContext;
+            this.CompletionsModelLiteral.Text = SuggestService.CompletionsModel;
+            this.ChatModelLiteral.Text = SuggestService.ChatModel;
 
             BindFields(payload);
         }
@@ -85,7 +86,7 @@
             }
             else
             {
-                if (ContextCheckbox.Checked && SuggestService.SupportsContext)
+                if (ContextCheckbox.Checked)
                     context = GenerateContext(payload);
             }
 

@@ -24,24 +24,29 @@
         public string BaseUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets the endpoint.
-        /// </summary>
-        public string Endpoint { get; set; }
-
-        /// <summary>
-        /// Gets or sets the model.
-        /// </summary>
-        public string Model { get; set; }
-
-        /// <summary>
         /// Gets or sets the API key.
         /// </summary>
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the max tokens.
+        /// Gets or sets the completions model.
         /// </summary>
-        public int MaxTokens { get; set; }
+        public string CompletionsModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the completions model max tokens.
+        /// </summary>
+        public int CompletionsMaxTokens { get; set; }
+
+        /// <summary>
+        /// Gets or sets the chat model.
+        /// </summary>
+        public string ChatModel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the chat model max tokens.
+        /// </summary>
+        public int ChatMaxTokens { get; set; }
 
         /// <summary>
         /// Gets or sets the reserved tokens.
@@ -49,30 +54,26 @@
         public int ReservedTokens { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the service supports context.
-        /// </summary>
-        public bool SupportsContext => Endpoint.Equals(Constants.Chat);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SuggestService"/> class.
         /// </summary>
-        public SuggestService(string baseUrl = null, string endpoint = null, string model = null , string apiKey = null, int? maxTokens = null, int? reservedTokens = null)
+        public SuggestService(string baseUrl = null, string apiKey = null, string completionsModel = null, int? completionsMaxTokens = null, string chatModel = null, int? chatMaxTokens = null, int? reservedTokens = null)
         {
             BaseUrl = baseUrl ?? Sitecore.Configuration.Settings.GetSetting(Constants.BaseUrlSetting);
             Assert.IsNotNull(BaseUrl, nameof(BaseUrl));
 
-            Endpoint = endpoint ?? Sitecore.Configuration.Settings.GetSetting(Constants.EndpointSetting);
-            if (!IsEndpointSupported(Endpoint))
-                throw new ArgumentException($"Unsupported endpoint: {Endpoint}");
+            CompletionsModel = completionsModel ?? Sitecore.Configuration.Settings.GetSetting(Constants.CompletionsModelSetting);
+            Assert.IsNotNull(CompletionsModel, nameof(CompletionsModel));
 
-            Model = model ?? Sitecore.Configuration.Settings.GetSetting(Constants.ModelSetting);
-            Assert.IsNotNull(Model, nameof(baseUrl));
+            ChatModel = chatModel ?? Sitecore.Configuration.Settings.GetSetting(Constants.ChatModelSetting);
+            Assert.IsNotNull(ChatModel, nameof(ChatModel));
 
             ApiKey = apiKey ?? Sitecore.Configuration.Settings.GetSetting(Constants.ApiKeySetting);
-            Assert.IsNotNull(ApiKey, nameof(apiKey));
+            Assert.IsNotNull(ApiKey, nameof(ApiKey));
 
-            MaxTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.MaxTokensSetting, 4096);
-            ReservedTokens = maxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.ReservedTokensSetting, 1024);
+            CompletionsMaxTokens = completionsMaxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.CompletionsMaxTokensSetting, 4096);
+            ChatMaxTokens = chatMaxTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.ChatMaxTokensSetting, 4096);
+
+            ReservedTokens = reservedTokens ?? Sitecore.Configuration.Settings.GetIntSetting(Constants.ReservedTokensSetting, 1024);
 
             httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(Constants.TimeOut);
@@ -87,13 +88,10 @@
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
 
-            if (Endpoint.Equals(Constants.Completions))
-                return GenerateCompletions(prompt, temperature, Model, language);
-
-            if (Endpoint.Equals(Constants.Chat))
-                return GenerateChat(prompt, context, temperature, Model, language);
-
-            throw new ArgumentException($"Unsupported endpoint: {Endpoint}");
+            if (context == null || !context.Any())
+                return GenerateCompletions(prompt, temperature, CompletionsModel, language);
+            else
+                return GenerateChat(prompt, context, temperature, ChatModel, language);
         }
 
         /// <summary>
@@ -106,7 +104,7 @@
                 Prompt = prompt,
                 Temperature = temperature,
                 Model = model,
-                MaxTokens = MaxTokens - prompt.EstimateTokens(language) 
+                MaxTokens = CompletionsMaxTokens - prompt.EstimateTokens(language) 
             };
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/completions"), out var errorMessage);
@@ -129,11 +127,9 @@
             if (context != null)
                 requestBody.Messages.AddRange(context.Select(c => new ChatMessage("system", c)));
 
-            // So if the MaxTokens is 4097 and our prompt is 10 tokens and we want to reserve 1024 tokens for the response
-            // We will add 3063 tokens worth of context
             if (context != null)
             { 
-                var contextTokens = MaxTokens - (ReservedTokens + prompt.EstimateTokens(language));
+                var contextTokens = ChatMaxTokens - (ReservedTokens + prompt.EstimateTokens(language));
                 foreach (var c in context)
                 {
                     contextTokens =- c.EstimateTokens(language);

@@ -24,8 +24,7 @@ function sitecoreSuggest_onLoad(event) {
         const disabled = summaryFieldIdCombobox.value.length == 0 && promptEdit.value.length == 0;
         generateButton.disabled = disabled;
         promptEdit.disabled = summaryFieldIdCombobox.value.length > 0;
-        if (contextCheckbox)
-            contextCheckbox.disabled = summaryFieldIdCombobox.value.length > 0;
+        contextCheckbox.disabled = summaryFieldIdCombobox.value.length > 0;
         summaryFieldIdCombobox.disabled = promptEdit.value.length > 0 || summaryFieldIdCombobox.length == 1;
     }
 
