@@ -29,6 +29,16 @@
                     ContextPrompt = "Kontekst: {0}",
                     TokensPerWord = 3
                 }
+            },
+            {
+                "fr",
+                new Language()
+                {
+                    SummaryPrompt = "Rédiger un résumé de {0}",
+                    WordPrompt = "Utilisez environ {0} mots",
+                    ContextPrompt = "Contexte: {0}",
+                    TokensPerWord = 3
+                }
             }
         };
     }

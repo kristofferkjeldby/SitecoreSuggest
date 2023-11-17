@@ -28,15 +28,6 @@
 
           <Edit ID="PromptEdit" class="sitecoreSuggest_Input"/>
 
-          <div class="sitecoreSuggest_Checkbox">
-            <Checkbox ID="ContextCheckbox"/>
-            Use chat model and include context
-          </div>
-
-        </div>
-
-        <div class="sitecoreSuggest_Section sitecoreSuggest_InputSection">
-
           <div class="sitecoreSuggest_Label">
             Or write a summary of:
           </div>
@@ -44,6 +35,11 @@
           <Combobox ID="SummaryFieldIdCombobox" class="sitecoreSuggest_Combobox" Width="100%">
             <ListItem Value="" Header=""/>
           </Combobox>
+
+          <div class="sitecoreSuggest_Checkbox">
+            <Checkbox ID="ContextCheckbox"/>
+            Use chat model and include context
+          </div>
 
         </div>
 
@@ -81,7 +77,7 @@
           <div class="sitecoreSuggest_Label">
             Suggestion:
           </div>
-          <Memo ID="SuggestionMemo" class="sitecoreSuggest_InputSection" Height="150px"/>
+          <Memo ID="SuggestionMemo" class="sitecoreSuggest_InputSection" Height="130px"/>
 
           <div class="sitecoreSuggest_Label">
             Use the suggestion in this field:

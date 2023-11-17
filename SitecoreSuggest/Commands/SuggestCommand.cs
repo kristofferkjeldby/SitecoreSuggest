@@ -59,7 +59,7 @@
             {
                 UrlString urlString = new UrlString(UIUtil.GetUri("control:SuggestForm"));
                 urlString.Append("payload", args.Parameters["payload"]);
-                SheerResponse.ShowModalDialog(urlString.ToString(), "600px", "400px", string.Empty, true);
+                SheerResponse.ShowModalDialog(urlString.ToString(), "650px", "400px", string.Empty, true);
                 args.WaitForPostBack();
             }
             else
