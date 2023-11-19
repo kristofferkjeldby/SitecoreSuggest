@@ -38,7 +38,7 @@
         /// <summary>
         /// Gets the fields.
         /// </summary>
-        public static List<Field> GetFields(this SuggestFormPayload payload)
+        public static List<Field> GetFields(this SuggestFormPayload payload, bool includeDataSourceItems = false)
         {
             var item = payload.GetItem();
 
@@ -52,6 +52,22 @@
 
                 if (field.IsInsertField())
                     fields.Add(field);
+            }
+
+            if (includeDataSourceItems)
+            {
+                foreach (var dataSourceItem in item.GetDataSourceItems())
+                {
+                    dataSourceItem?.Fields.ReadAll();
+
+                    foreach (var f in dataSourceItem?.Fields)
+                    {
+                        var field = f as Field;
+
+                        if (field.IsInsertField())
+                            fields.Add(field);
+                    }
+                }
             }
 
             return fields.OrderBy(f => f.SectionSortorder).ThenBy(f => f.SectionDisplayName).ThenBy(f => f.Sortorder).ToList();

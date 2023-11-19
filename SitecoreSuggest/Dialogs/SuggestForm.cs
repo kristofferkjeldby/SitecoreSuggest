@@ -137,7 +137,7 @@
             if (!Languages.SupportedLanguages.TryGetValue(payload.Language, out var supportedLanguage))
                 return null;
 
-            return payload.GetFields().
+            return payload.GetFields(true).
                 Where(field => field.IsContextField()).
                 Select(field => string.Format(supportedLanguage.ContextPrompt, field.GetValueAsString(true))).
                 ToArray();
