@@ -56,7 +56,8 @@ The `Endpoint` ("completions" or "chat") and the `Model` settings are configured
       <!-- Please make sure to match the endpoint ("completions" or "chat") to the selected model as the model exposed by the endpoints are not the same -->
       <setting name="SitecoreSuggest.Endpoint" value="completions"/>
       <setting name="SitecoreSuggest.Model" value="gpt-3.5-turbo-instruct"/>
-      <setting name="SitecoreSuggest.MaxTokens" value="4097"/>
+      <!-- The max tokens is only used for en completions endpoints -->
+      <setting name="SitecoreSuggest.MaxTokens" value="4096"/>
     </settings>
   </sitecore>
 </configuration>
