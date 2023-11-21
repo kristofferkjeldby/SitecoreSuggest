@@ -1,4 +1,4 @@
-# SitecoreSuggest
+# SitecoreSuggest 0.1
 
 ![Example](https://raw.githubusercontent.com/kristofferkjeldby/SitecoreSuggest/main/readme.png)
 
