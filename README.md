@@ -8,11 +8,11 @@ SitecoreSuggest is an integration between Sitecore XM 10.3 and the GPT language 
 
 ## Getting Started
 
-To get started you can download the package complete package ([SitecoreSuggest.zip](SitecoreSuggest.zip)) and install it on your Sitecore server. 
+To get started you can download the package complete package ([SitecoreSuggest-0.1.zip](SitecoreSuggest-0.1.zip)) and install it on your Sitecore server. 
 
 Alternative you can clone the solution locally. Please note that the solution is setup for Sitecore 10.3. If you wish to use the solution in other version of Sitecore, make sure to adjust the NuGet packages (`Sitecore.Kernel` and `Newtonsoft.Json`) to match the expected versions.
 
-If you download the solution, you will need to install the [SitecoreSuggest-Items.zip](SitecoreSuggest-Items.zip) package that contains the needed Sitecore items for the core database:
+If you download the solution, you will need to install the [SitecoreSuggest-Items-0.1.zip](SitecoreSuggest-Items-0.1.zip) package that contains the needed Sitecore items for the core database:
 
 ```
 /sitecore/content/Applications/Content Editor/Ribbons/Chunks/Proofing/Suggest
