@@ -1,4 +1,4 @@
-# SitecoreSuggest
+# SitecoreSuggest 0.2
 
 ![Example](https://raw.githubusercontent.com/kristofferkjeldby/SitecoreSuggest/main/readme.png)
 
@@ -12,7 +12,7 @@ To get started, first you need to download or clone the solution and open it in 
 
 ### Configuration Sitecore
 
-As part of the solution a Sitecore package is provided ([SitecoreSuggest.zip](SitecoreSuggest.zip)). The package should be installed on your (local) Sitecore CM server and will add three items in the core database:
+As part of the solution a Sitecore package is provided ([SitecoreSuggest-Items-0.2.zip](SitecoreSuggest-Items-0.2.zip)). The package should be installed on your (local) Sitecore CM server and will add three items in the core database:
 
 ```
 /sitecore/content/Applications/Content Editor/Ribbons/Chunks/Proofing/Suggest
