@@ -109,7 +109,7 @@
     <Compile Include="Services\SuggestService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\SitecoreSuggest.config" />
+    <Content Include="App_Config\Include\Feature\SitecoreSuggest.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

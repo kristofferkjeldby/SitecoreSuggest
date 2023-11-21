@@ -8,11 +8,11 @@ SitecoreSuggest is an integration between Sitecore XM 10.3 and the GPT language 
 
 ## Getting Started
 
-To get started, first you need to download or clone the solution and open it in Visual Studio.
+To get started you can download the package complete package ([SitecoreSuggest.zip](SitecoreSuggest.zip)) and install it on your Sitecore server. 
 
-### Configuration Sitecore
+Alternative you can clone the solution locally. Please note that the solution is setup for Sitecore 10.3. If you wish to use the solution in other version of Sitecore, make sure to adjust the NuGet packages (`Sitecore.Kernel` and `Newtonsoft.Json`) to match the expected versions.
 
-As part of the solution a Sitecore package is provided ([SitecoreSuggest.zip](SitecoreSuggest.zip)). The package should be installed on your (local) Sitecore CM server and will add three items in the core database:
+If you download the solution, you will need to install the [SitecoreSuggest-Items.zip](SitecoreSuggest-Items.zip) package that contains the needed Sitecore items for the core database:
 
 ```
 /sitecore/content/Applications/Content Editor/Ribbons/Chunks/Proofing/Suggest
@@ -30,11 +30,7 @@ Note that Open AI offers both free and paid access but impose limitations on fre
 
 ### Configuring and publish the solution
 
-In Visual Studio open the file [App_Config\Include\SitecoreSuggest.config](SitecoreSuggest/App_Config/Include/SitecoreSuggest.config) and uncomment the `SitecoreSuggest.ApiKey` setting and insert your API key. 
-
-Setup a publish profile to publish the solution into your local Sitecore CM web root and publish the solution. Please note that the solution is setup for Sitecore 10.3. If you wish to use the solution in other version of Sitecore, make sure to adjust the NuGet packages (`Sitecore.Kernel` and `Newtonsoft.Json`) to match the expected versions.
-
-You can of cause also include the code files in you own solution.
+Open the file [App_Config\Include\Feature\SitecoreSuggest.config](SitecoreSuggest/App_Config/Include/SitecoreSuggest.config) and uncomment the `SitecoreSuggest.ApiKey` setting and insert your API key.  
 
 When this is done, you should be able to login to Sitecore, select an content item, open the *Review* ribbon and click *Suggest* to start generating content for the selected item based on a prompt (and question).
 
