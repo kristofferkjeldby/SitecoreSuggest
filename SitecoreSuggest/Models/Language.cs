@@ -19,10 +19,5 @@
         /// Gets or sets the context prompt.
         /// </summary>
         public string ContextPrompt { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tokens per word.
-        /// </summary>
-        public float TokensPerWord { get; set; }
     }
 }

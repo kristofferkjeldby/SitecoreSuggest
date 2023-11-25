@@ -16,8 +16,7 @@
                 {
                     SummaryPrompt = "Write summary of {0}",
                     WordPrompt = "Use around {0} words",
-                    ContextPrompt = "Context: {0}",
-                    TokensPerWord = 2.5f
+                    ContextPrompt = "Context: {0}"
                 }
             },
             {
@@ -26,8 +25,7 @@
                 {
                     SummaryPrompt = "Skriv en opsummering af {0}",
                     WordPrompt = "Brug omkring {0} ord",
-                    ContextPrompt = "Kontekst: {0}",
-                    TokensPerWord = 3
+                    ContextPrompt = "Kontekst: {0}"
                 }
             },
             {
@@ -36,8 +34,7 @@
                 {
                     SummaryPrompt = "Rédiger un résumé de {0}",
                     WordPrompt = "Utilisez environ {0} mots",
-                    ContextPrompt = "Contexte: {0}",
-                    TokensPerWord = 3
+                    ContextPrompt = "Contexte: {0}"
                 }
             }
         };
