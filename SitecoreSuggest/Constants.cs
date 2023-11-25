@@ -1,4 +1,6 @@
-﻿namespace SitecoreSuggest
+﻿using System.Collections.Specialized;
+
+namespace SitecoreSuggest
 {
     /// <summary>
     /// Constants
@@ -116,5 +118,15 @@
         /// The time out in seconds
         /// </summary>
         public static int TimeOut = 300;
+
+        /// <summary>
+        /// The vocabulary file
+        /// </summary>
+        public static string VocabularyFile = "~/App_Data/SitecoreSuggest/vocab.json";
+
+        /// <summary>
+        /// The merges file
+        /// </summary>
+        public static string MergesFile = "~/App_Data/SitecoreSuggest/merges.txt";
     }
 }

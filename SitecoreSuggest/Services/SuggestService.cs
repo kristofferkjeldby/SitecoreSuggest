@@ -83,28 +83,28 @@
         /// <summary>
         /// Generates a suggestion based on a payload.
         /// </summary>
-        public string GenerateSuggestion(string prompt, string[] context, float temperature, Language language)
+        public string GenerateSuggestion(string prompt, string[] context, float temperature)
         {
             if (string.IsNullOrEmpty(prompt))
                 return string.Empty;
 
             if (context == null || !context.Any())
-                return GenerateCompletions(prompt, temperature, CompletionsModel, language);
+                return GenerateCompletions(prompt, temperature, CompletionsModel);
             else
-                return GenerateChat(prompt, context, temperature, ChatModel, language);
+                return GenerateChat(prompt, context, temperature, ChatModel);
         }
 
         /// <summary>
         /// Generates the completions response.
         /// </summary>
-        private string GenerateCompletions(string prompt, float temperature, string model, Language language)
+        private string GenerateCompletions(string prompt, float temperature, string model)
         {
             var requestBody = new CompletionsRequest()
             {
                 Prompt = prompt,
                 Temperature = temperature,
                 Model = model,
-                MaxTokens = CompletionsMaxTokens - prompt.EstimateTokens(language) 
+                MaxTokens = CompletionsMaxTokens - prompt.CountTokens() 
             };
 
             var jsonResponse = GetResponse(requestBody, string.Concat(BaseUrl, "/completions"), out var errorMessage);
@@ -116,7 +116,7 @@
         /// <summary>
         /// Generates the chat response.
         /// </summary>
-        private string GenerateChat(string prompt, string[] context, float temperature, string model, Language language)
+        private string GenerateChat(string prompt, string[] context, float temperature, string model)
         {
             var requestBody = new ChatRequest()
             {
@@ -129,10 +129,10 @@
 
             if (context != null)
             { 
-                var contextTokens = ChatMaxTokens - (ReservedTokens + prompt.EstimateTokens(language));
+                var contextTokens = ChatMaxTokens - (ReservedTokens + prompt.CountTokens());
                 foreach (var c in context)
                 {
-                    contextTokens =- c.EstimateTokens(language);
+                    contextTokens =- c.CountTokens();
 
                     if (contextTokens < 0)
                         break;

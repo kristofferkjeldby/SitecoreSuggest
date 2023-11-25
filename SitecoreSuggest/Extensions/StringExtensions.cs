@@ -1,16 +1,23 @@
 ﻿namespace SitecoreSuggest.Extensions
 {
-    using Sitecore.Shell.Applications.ContentEditor;
-    using SitecoreSuggest.Models;
+    using Microsoft.ML.Tokenizers;
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Web;
 
     /// <summary>
     /// Extensions for strings
     /// </summary>
     public static class StringExtensions
     {
+        private static Tokenizer tokenizer = new Tokenizer(
+            new Bpe(
+                HttpContext.Current.Server.MapPath(Constants.VocabularyFile),
+                HttpContext.Current.Server.MapPath(Constants.MergesFile)
+            )
+        );
+
         /// <summary>
         /// Converts to html.
         /// </summary>
@@ -53,28 +60,11 @@
         }
 
         /// <summary>
-        /// Estimates the number of tokens.
+        /// Counts the number of tokens.
         /// </summary>
-        public static int EstimateTokens(this string value, Language language)
+        public static int CountTokens(this string value)
         {
-            if (string.IsNullOrEmpty(value))
-                return 0;
-
-            float tokens = value.Count(c => Constants.TokenChars.Contains(c));
-
-            foreach(var word in value.Split(Constants.TokenSplitChars))
-            {
-                // Number are typically tokenized in pairs of three
-                if (word.All(c => char.IsDigit(c)))
-                {
-                    tokens += word.Length / 3;
-                    continue;
-                }
-
-                tokens += language.TokensPerWord;
-            }
-
-            return Convert.ToInt32(Math.Ceiling(tokens));
+            return tokenizer.Encode(value).Tokens.Count();
         }
     }
 }

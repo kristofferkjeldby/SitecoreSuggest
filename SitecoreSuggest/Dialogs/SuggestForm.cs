@@ -96,7 +96,7 @@
             if (int.TryParse(WordsCombobox.SelectedItem.Value, out var words))
                 prompt = string.Concat(prompt.TrimEnd('.'), ". ", string.Format(language.WordPrompt, words));
 
-            var suggestion = SuggestService.GenerateSuggestion(prompt, context, temperature, language);
+            var suggestion = SuggestService.GenerateSuggestion(prompt, context, temperature);
 
             if (append && !string.IsNullOrEmpty(SuggestionMemo.Value))
                 SuggestionMemo.Value = SuggestionMemo.Value.Append(suggestion);
